@@ -1,4 +1,4 @@
-[back to overwiev](/../..)
+[back to overview](/../..)
 
 # Kubernetes Cheatsheet
 

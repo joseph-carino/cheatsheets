@@ -1,13 +1,22 @@
+[back to overview](/../..)
 Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
 
-# Ruby on Rails Cheatsheet
+# Ruby on Rails Cheatsheet<!-- omit in toc -->
 
-##### Table of Contents
-
-[Basics](#basics)  
-[Connect a Database](#connect-a-database)  
-[Rake](#rake)  
-[Troubleshoots](#troubleshoots)
+- [Basics](#basics)
+    - [request/response cycle](#requestresponse-cycle)
+    - [1. Generate a new Rails app](#1-generate-a-new-rails-app)
+    - [2. Generate a controller and add an action](#2-generate-a-controller-and-add-an-action)
+    - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action)
+    - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css)
+- [Connect a Database](#connect-a-database)
+    - [Example: messaging system:](#example-messaging-system)
+    - [1. Generate a new Model](#1-generate-a-new-model)
+    - [2. Generate a controller and add actions](#2-generate-a-controller-and-add-actions)
+    - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action-1)
+    - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css-1)
+- [Rake](#rake)
+- [Troubleshoots](#troubleshoots)
 
 ## Basics
 

@@ -1,25 +1,44 @@
 [back to overview](/../..)  
 Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
 
-# Ruby Cheatsheet
+# Ruby Cheatsheet<!-- omit in toc -->
 
-##### Table of Contents
-
-- [Basics](#basics)  
-- [Vars, Constants, Arrays, Hashes & Symbols](#vars-constants-arrays-hashes--symbols)  
+- [Basics](#basics)
+- [Vars, Contants, Arrays, Hashes & Symbols](#vars-contants-arrays-hashes--symbols)
+  - [Constants](#constants)
+  - [Arrays](#arrays)
+  - [Hashes](#hashes)
+  - [Symbols](#symbols)
+    - [Functions to create Arrays](#functions-to-create-arrays)
 - [Methods](#methods)
 - [Classes](#classes)
+  - [Inheritance](#inheritance)
 - [Modules](#modules)
-- [Blocks & Procs](#blocks--procs)  
+- [Blocks & Procs](#blocks--procs)
+  - [Code Blocks](#code-blocks)
+  - [Proc](#proc)
 - [Lambdas](#lambdas)
-- [Calculation](#calculation)  
-- [Comment](#comment)  
-- [Conditions](#conditions)  
-- [Printing & Putting](#printing--putting)  
-- [User Input](#user-input)  
+- [Calculation](#calculation)
+- [Commenting](#commenting)
+- [Conditions](#conditions)
+  - [If](#if)
+  - [Unless](#unless)
+  - [Case](#case)
+- [Printing & Putting](#printing--putting)
+- [String Methods](#string-methods)
+- [User Input](#user-input)
 - [Loops](#loops)
-- [Sorting & Comparing](#sorting--comparing)  
+  - [While loop](#while-loop)
+  - [Until loop](#until-loop)
+  - [For loop](#for-loop)
+  - [Loop iterator](#loop-iterator)
+  - [Next](#next)
+  - [.each](#each)
+  - [.times](#times)
+  - [.upto / .downto](#upto--downto)
+- [Sorting & Comparing](#sorting--comparing)
 - [Useful Methods](#useful-methods)
+- [Tips](#tips)
 
 ## Basics
 
@@ -35,20 +54,23 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
 - - `$`: global variable
 - - `@`: instance variable
 - - `@@`: class variable
-- `1_000_000`: 1000000 –– just easier to read\*
+- - starts with capital: constant
+- `1_000_000`: 1000000 –– just easier to read
+- `nil`: null
 
 ## Vars, Contants, Arrays, Hashes & Symbols
 
 ```Ruby
 my_variable = “Hello”
-my_variable.capitalize! # ! changes the value of the var same as my_name = my_name.capitalize
-my_variable ||= "Hi" # ||= is a conditional assignment only set the variable if it was not set before.
+my_variable.capitalize! # ! methods modify (and return) the object - same as my_variable = my_variable.capitalize
+my_variable ||= "Hi" # ||= is a conditional assignment - only set the variable if it was not set before.
+my_variable.object_id # unique refid for this object
 ```
 
 ### Constants
 
 ```Ruby
-MY_CONSTANT = # something
+MY_CONSTANT = "something" # starts with capital
 ```
 
 ### Arrays
@@ -81,9 +103,9 @@ my_hash.each_value { |v| print v, " " }
 ### Symbols
 
 ```Ruby
-:symbol # symbol is like an ID in html. :symbol != "symbol"
-# Symbols are often used as Hash keys or referencing method names.
-# They can not be changed once created. They save memory (only one copy at a given time). Faster.
+:symbol # use whenever you need internal identifiers in code (i.e. hash keys, reference method name) 
+# :symbol != "symbol" Immutable. Faster.
+# Once you have used a Symbol once, any Symbol with the same characters references the same Object in memory.
 :test.to_s # converts to "test"
 "test".to_sym # converts to :test
 "test".intern # :test
@@ -263,6 +285,8 @@ Multyline comment
 
 ## Conditions
 
+Note everything except `nil` and `false` are true (including `0`).
+
 ### If
 
 ```Ruby
@@ -399,7 +423,7 @@ end
 ### .each
 
 ```Ruby
-things.each do |item| # for each things in things do something while storing that things in the variable item
+things.each do |item| # foreach(item in things)
   print “#{item}"
 end
 ```
@@ -407,7 +431,7 @@ end
 on hashes like so:
 
 ```Ruby
-hashes.each do |x,y|
+hashes.each do |x,y| # foreach(x,y in hashes)
   print "#{x}: #{y}"
 end
 ```
@@ -447,4 +471,29 @@ array.sort! { |a, b| b <=> a } # to sort from Z to A instead of A to Z
 1.2.floor # 1 # rounds a float (a number with a decimal) down to the nearest integer.
 cube.call # implying that cube is a proc, call calls procs directly
 Time.now # displays the actual time
+```
+
+## Tips
+
+Everything has a value
+```Ruby
+x = 10
+y = 11
+z = if x < y
+      true
+    else
+      false
+    end
+z # => true
+```
+
+Everything is an object
+```Ruby
+MyClass = Class.new do
+  attr_accessor :instance_var
+end
+# This is the same as
+# class MyClass
+#   attr_accessor :instance_var
+# end
 ```

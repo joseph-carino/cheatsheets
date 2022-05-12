@@ -1,13 +1,11 @@
 [back to overview](/../..)
 
-# Shopify Cheatsheet
+# Shopify Cheatsheet<!-- omit in toc -->
 
-##### Table of Contents
-
-- [Terms](#terms)  
-- [Spin](#spin)  
-- [Dev](#dev)  
-- [Links](#links)  
+- [Terms](#terms)
+- [Spin](#spin)
+- [Dev](#dev)
+- [Links](#links)
 
 ## Terms
 

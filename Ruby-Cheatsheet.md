@@ -1,4 +1,4 @@
-[back to overview](/../..)  
+[back to overview](/../..)
 Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
 
 # Ruby Cheatsheet<!-- omit in toc -->
@@ -19,7 +19,11 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
   - [Code Blocks](#code-blocks)
   - [Proc](#proc)
 - [Lambdas](#lambdas)
-- [Calculation](#calculation)
+- [Operators](#operators)
+  - [Comparison](#comparison)
+  - [Assignment](#assignment)
+  - [Calculation](#calculation)
+  - [Other](#other)
 - [Commenting](#commenting)
 - [Conditions](#conditions)
   - [If](#if)
@@ -43,10 +47,10 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
 
 ## Basics
 
-- `$ irb`: to write ruby in the terminal
-- don't use `'` in ruby, use `"` instead
+- `irb`: to write ruby in the terminal
+- `'` strings are literal, `"` strings allow interpolation and escapes
 - you can replace most `{}` with `do end` and vice versa –– not true for hashes or `#{}` escapings
-- Best Practice: end names that produce booleans with question mark
+- Best Practice: end names that produce booleans with ?, update the Object with !
 - CRUD: create, read, update, delete
 - `[1,2].map(&:to_i)`
 - `integer`: number without decimal
@@ -58,6 +62,15 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
 - - starts with capital: constant
 - `1_000_000`: 1000000 –– just easier to read
 - `nil`: null
+- Method calls are really messages:
+  ```Ruby
+  # This
+  1 + 2
+  # Is the same as this ...
+  1.+(2)
+  # Which is the same as this:
+  1.send "+", 2
+```
 
 ## Vars, Contants, Arrays, Hashes & Symbols
 
@@ -104,7 +117,7 @@ my_hash.each_value { |v| print v, " " }
 ### Symbols
 
 ```Ruby
-:symbol # use whenever you need internal identifiers in code (i.e. hash keys, reference method name) 
+:symbol # use whenever you need internal identifiers in code (i.e. hash keys, reference method name)
 # :symbol != "symbol" Immutable. Faster.
 # Once you have used a Symbol once, any Symbol with the same characters references the same Object in memory.
 :test.to_s # converts to "test"
@@ -125,7 +138,7 @@ my_hash = { key: "value", key2: "value" } # is equal to { :key => "value", :key2
 **Methods**
 
 ```Ruby
-def greeting(hello, *names) # *names is a split argument, takes several parameters passed in an array 
+def greeting(hello, *names) # *names is a split argument, takes several parameters passed in an array
   return "#{hello}, #{names}"
 end
 
@@ -247,54 +260,81 @@ Rabbit.jump # extend
 
 ### Code Blocks
 
-_Blocks are not objects._ A block is just a bit of code between do..end or {}. It's not an object on its own, but it can be passed to methods like .each or .select.
+_Blocks are not objects._ Enclosed in do..end or {}.
+`yield`: run block
 
 ```Ruby
 def yield_name(name)
+  return "No block given" unless block_given?
   yield("Kim") # print "My name is Kim. "
   yield(name) # print "My name is Eric. "
 end
 
+yield_name("Eric") # => "No block given"
 yield_name("Eric") { |n| print "My name is #{n}. " } # My name is Kim. My name is Eric.
-yield_name("Peter") { |n| print "My name is #{n}. " } # My name is Kim. My name is Eric. My name is Kim. My name is Peter.
+yield_name("Peter") { |n| print "My name is #{n}. " } # My name is Kim. My name is Peter.
+
+def explicit_block(&block)
+  block.call # same as yield
+end
 ```
 
 ### Proc
 
-_Saves blocks and are objects._ A proc is a saved block we can use over and over.
+_Saves blocks and are objects._ A proc is a saved block object.
 
 ```Ruby
 cube = Proc.new { |x| x ** 3 }
-[1, 2, 3].collect!(&cube) # [1, 8, 27] # the & is needed to transform the Proc to a block.
-cube.call # call procs directly
+# & operator translates proc into block
+[1, 2, 3].collect(&cube) # [1, 8, 27] # the & is needed to transform the Proc to a block.
+cube.call(3) # =>27 call procs directly
+
+def block(&the_block) # take block and turn it into a proc
+  the_block # return the block
+end
+adder = block { |a, b| a + b } # adder is now a Proc object
+adder.class # => Proc
 ```
 
 ## Lambdas
 
 ```Ruby
 lambda { |param| block }
-multiply = lambda { |x| x * 3 }
+multiply = ->(x) { x * 3 } #same as next line
+multiply = lambda { |x| x * 3 } #same as prev line
+multiply.call(4) # => 12
 y = [1, 2].collect(&multiply) # 3 , 6
 ```
 
 Diff between procs and lambdas:
 
 - a lambda checks the number of arguments passed to it, while a proc does not (This means that a lambda will throw an error if you pass it the wrong number of arguments, whereas a proc will ignore unexpected arguments and assign nil to any that are missing.)
-- when a lambda returns, it passes control back to the calling method; when a proc returns, it does so immediately, without going back to the calling method.
-  So: A lambda is just like a proc, only it cares about the number of arguments it gets and it returns to its calling method rather than returning immediately.
+- when a lambda `return`s, it passes control back to the calling method; when a proc `return`s, it does so immediately, without going back to the calling method.
 
-## Calculation
+## Operators
 
-- Addition (+)
-- Subtraction (-)
-- Multiplication (\*)
-- Division (/)
-- Exponentiation (\*\*)
-- Modulo (%)
-- The concatenation operator (<<)
-- you can do 1 += 1 –– which gives you 2 but 1++ and 1-- does not exist in ruby
-- `"A " << "B"` => `"A B"` but `"A " + "B"` would work as well but `"A " + 4 + " B"` not. So rather use string interpolation (`#{4}`)
-- `"A #{4} B"` => `"A 4 B"`
+### Comparison
+
+- `==`, `!=`, `>`, `<`, `>=`, `<=` as normal
+- `<=>`: comparison, 0 if equal, 1 if a>b, -1 if a<b
+- `.eql?`: true if same type and values
+- `.equal?`: true if same object id
+
+### Assignment
+
+- Assignment operators: `+=`, `-=`, `*=`, `/=`, `%=`, `**=` but NOT 1++ or 1--
+- `a, b, c = 10, 20, 30` is the same as `a = 10` `b = 10` `c = 10`
+
+### Calculation
+
+- Normal: `+`, `-`, `*`, `/`, `%`, `**` (exponent)
+- The concatenation operator (<<) `"a" << "b" # =>"ab"`
+
+### Other
+- `condition ? "true" : "false"`: ternary
+- `1..9`: inclusive range (1..9)
+- `1...9`: exclusive range (1..8)
+- `defined? x`: true if x is (varialbe) initialized or (method) defined
 
 ## Commenting
 
@@ -344,18 +384,18 @@ puts "not printed" unless true
 
 ```Ruby
 case my_var
-  when "some value"
-    ###
-  when "some other value"
-    ###
-  else
-    ###
+when "some value"
+  ###
+when "some other value"
+  ###
+else
+  ###
 end
 # or
 case my_var
-  when "some value" then ###
-  when "some other value" then ###
-  else ###
+when "some value" then ###
+when "some other value" then ###
+else ###
 end
 ```
 

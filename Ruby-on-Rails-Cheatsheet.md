@@ -136,6 +136,7 @@ $ rails generate controller Messages
 
 Open: app/controllers/messages_controller.rb
 
+Note class name in PascalCase must match file name in snake_case
 ```Ruby
 class MessagesController < ApplicationController
 
@@ -176,7 +177,7 @@ Open: config/routes.rb
 ```Ruby
 Rails.application.routes.draw do
 
-  get 'messages' => 'messages#index'
+  get 'messages' => 'messages#index' # 'messages' route targets class 'MessagesController' in file /app/controllers/messages_controller.rb action 'index'
   get 'messages/new' => 'messages#new'
   post 'messages' => 'messages#create'
 

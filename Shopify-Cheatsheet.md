@@ -21,3 +21,4 @@
 ## Dev
 
 ## Links
+- [Ruby Style Guide](https://github.com/Shopify/ruby-style-guide)

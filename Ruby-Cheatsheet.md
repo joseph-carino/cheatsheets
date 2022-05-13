@@ -12,6 +12,7 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
     - [Functions to create Arrays](#functions-to-create-arrays)
 - [Methods](#methods)
 - [Classes](#classes)
+- [Singleton Methods](#singleton-methods)
   - [Inheritance](#inheritance)
 - [Modules](#modules)
 - [Blocks & Procs](#blocks--procs)
@@ -162,10 +163,35 @@ class Person # class names are rather written in PascalCase (It is similar to ca
   private
 
   def private_method; end # Private methods go here
+  def private_method_2; end # note this is still private (until end of block or next access modifier)
 end
 
 matz = Person.new("Yukihiro")
 matz.show_name # Yukihiro
+```
+
+## Singleton Methods
+
+_Per-object methods, only available on the Object you defined it on_
+
+```Ruby
+class Car
+  def inspect
+    "Cheap car"
+  end
+end
+
+porsche = Car.new
+porsche.inspect # => Cheap car
+def porsche.inspect
+  "Expensive car"
+end
+
+porsche.inspect # => Expensive car
+
+# Other objects are not affected
+other_car = Car.new
+other_car.inspect # => Cheap car
 ```
 
 ### Inheritance

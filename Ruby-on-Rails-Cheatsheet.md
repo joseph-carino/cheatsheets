@@ -12,10 +12,10 @@ Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
 - [Connect a Database](#connect-a-database)
   - [Example: messaging system](#example-messaging-system)
   - [1. Generate a new Model](#1-generate-a-new-model)
+    - [Associations](#associations)
   - [2. Generate a controller and add actions](#2-generate-a-controller-and-add-actions)
   - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action-1)
   - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css-1)
-- [Rake](#rake)
 - [Troubleshoots](#troubleshoots)
 
 # Basics
@@ -85,14 +85,16 @@ Open: app/views/pages/home.html.erb
 
 ## Example: messaging system
 
-## 1. [Generate a new Model](https://guides.rubyonrails.org/active_record_migrations.html#model-generators)
+## 1. Generate a new Model
 
+[Let rails create the model for you as below](https://guides.rubyonrails.org/active_record_migrations.html#model-generators), or [manually create the class and migration yourself](https://guides.rubyonrails.org/active_record_migrations.html#creating-a-standalone-migration)
 ```
 $ rails generate model Message
 ```
 
-create model named Message. With two files: model file app/models/message.rb. Represents a table in database. Migration file db/migrate/. Way to update database.
-Open: db/migrate/*.rb –– *The name of the migration file starts with the timestamp of when it was created
+This creates model named Message, with two files:
+- Model file app/models/message.rb
+- Migration file db/migrate/YYYYMMDDHHMMSS_create_message.rb
 
 ```Ruby
 class CreateMessages < ActiveRecord::Migration
@@ -105,32 +107,33 @@ class CreateMessages < ActiveRecord::Migration
 end
 ```
 
-1. The change method tells Rails what change to make to the database. Here create_table method create a new table in database for storing messages.
-2. t.text :content. Create text column called content in the messages tables.
-3. t.timestamps is a Rails command that creates two more columns in the messages table called created_at and updated_at. These columns are automatically set when a message is created and updated.
-   Open: db/seeds.rb
+1. `change` method tells Rails what change to make to the database.
+2. `t.text :content` - create text column called content in the messages tables.
+3. `t.timestamps` - a Rails command that creates columns created_at and updated_at. These columns are automatically set when a message is created and updated.
 
+```
+$ rails db:create # create db
+$ rails db:drop # drop db
+$ rails db:schema:load # run schema.rb
+$ rails db:schema:dump # dump db schema to schema.rb
+$ rails db:version # print schema version
+$ rails db:migrate # run migrations
+$ rails db:rollback # [rollback previous migration](https://edgeguides.rubyonrails.org/active_record_migrations.html#rolling-back)
+$ rails db:seed # seed by running seeds.rb
+$ rails db:setup # db:create, db:schema:load, db:seed
+$ rails db:reset # db:drop, db:setup
+$ rails db:migrate:reset # db:drop, db:create, db:migrate
+```
+
+Seed data in seeds.rb:
 ```Ruby
-m1 = Message.create(content: "We're at the beach so you should meet us here! I make a mean sandcastle. :)")
-m2 = Message.create(content: "Let's meet there!")
+m1 = Message.create(content: "Text1") # new object and save to db
+m3 = Message.new(content: "Test") # create new message object, do not save yet
+m3.save # save object to db => true
+m3.persisted? # => true
 ```
 
-Just to have dummy messages to load with db:seed
-in Terminal run
-
-```
-$ rails db:migrate
-$ rake db:setup
-$ rake db:migrate
-$ rake db:seed
-```
-
-updates the database with the new messages data model.
-seeds the database with sample data from db/seeds.rb
-
----
-
-Alernatively, manually write the ActiveRecord class and create a [standalone migration](https://guides.rubyonrails.org/active_record_migrations.html#creating-a-standalone-migration)
+### [Associations](https://guides.rubyonrails.org/association_basics.html)
 
 ## 2. Generate a controller and add actions
 
@@ -185,8 +188,14 @@ Rails.application.routes.draw do
   get 'messages/new' => 'messages#new'
   post 'messages' => 'messages#create'
 
+  resources :messages # maps conventional routes
 end
 ```
+
+- `resources :MODEL` - sets up conventional routes, also helpers based on prefixes. [see here](https://guides.rubyonrails.org/getting_started.html#resourceful-routing)
+- `resources :MODEL do resources :NESTED end` - nests NESTED in MODEL
+- `$ rails routes` - shows all configured routes
+
 
 ## 4. Create a view with HTML and CSS
 
@@ -224,25 +233,10 @@ Open: app/views/messages/new.html.erb
 </div>
 ```
 
-# Rake
-
-```bash
-rake db:create                          # Creates the database from DATABASE_URL or config/database.yml for the current RAILS_ENV (use db:create:all to create all databa...
-rake db:drop                            # Drops the database from DATABASE_URL or config/database.yml for the current RAILS_ENV (use db:drop:all to drop all databases in...
-rake db:fixtures:load                   # Load fixtures into the current environment's database
-rake db:migrate                         # Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)
-rake db:migrate:status                  # Display status of migrations
-rake db:rollback                        # Rolls the schema back to the previous version (specify steps w/ STEP=n)
-rake db:schema:cache:clear              # Clear a db/schema_cache.dump file
-rake db:schema:cache:dump               # Create a db/schema_cache.dump file
-rake db:schema:dump                     # Create a db/schema.rb file that is portable against any DB supported by AR
-rake db:schema:load                     # Load a schema.rb file into the database
-rake db:seed                            # Load the seed data from db/seeds.rb
-```
-
 # Troubleshoots
 
 1. When seeing only a blank page after running rails server:
    http://stackoverflow.com/questions/25951969/rails-4-2-and-vagrant-get-a-blank-page-and-nothing-in-the-logs
 2. Follow instructions to use postgres:
    https://www.digitalocean.com/community/tutorials/how-to-setup-ruby-on-rails-with-postgres
+3. [Rollback](https://edgeguides.rubyonrails.org/active_record_migrations.html#rolling-back)

@@ -45,7 +45,7 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
 - [Useful Methods](#useful-methods)
 - [Tips](#tips)
 
-## Basics
+# Basics
 
 - `irb`: to write ruby in the terminal
 - `'` strings are literal, `"` strings allow interpolation and escapes
@@ -73,7 +73,7 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
   ```
 - `PORO` == POJO
 
-## Vars, Contants, Arrays, Hashes & Symbols
+# Vars, Contants, Arrays, Hashes & Symbols
 
 ```Ruby
 my_variable = “Hello”
@@ -82,13 +82,13 @@ my_variable ||= "Hi" # ||= is a conditional assignment - only set the variable i
 my_variable.object_id # unique refid for this object
 ```
 
-### Constants
+## Constants
 
 ```Ruby
 MY_CONSTANT = "something" # starts with capital
 ```
 
-### Arrays
+## Arrays
 
 ```Ruby
 my_array = [a,b,c,d,e]
@@ -98,7 +98,7 @@ multi_d = [[0,1],[0,1]]
 [1, 2, 3] << 4 # [1, 2, 3, 4] same as [1, 2, 3].push(4)
 ```
 
-### Hashes
+## Hashes
 
 ```Ruby
 hash = { "key1" => "value1", "key2" => "value2" } # same as objects in JavaScript
@@ -115,7 +115,7 @@ my_hash.each_value { |v| print v, " " }
 # ==> 1 2 3
 ```
 
-### Symbols
+## Symbols
 
 ```Ruby
 :symbol # use whenever you need internal identifiers in code (i.e. hash keys, reference method name)
@@ -128,13 +128,13 @@ my_hash.each_value { |v| print v, " " }
 my_hash = { key: "value", key2: "value" } # is equal to { :key => "value", :key2 => "value" }
 ```
 
-#### Functions to create Arrays
+### Functions to create Arrays
 
 ```Ruby
 "bla,bla".split(“,”) # takes string and returns an array (here  ["bla","bla"])
 ```
 
-## Methods
+# Methods
 
 **Methods**
 
@@ -146,11 +146,11 @@ end
 start = greeting("Hi", "Justin", "Maria", "Herbert") # call a method by name
 
 def name(variable=default)
-  ### The last line in here gets returned by default
+  ## The last line in here gets returned by default
 end
 ```
 
-## Classes
+# Classes
 
 _custom objects_
 
@@ -184,7 +184,7 @@ matz = Person.new("Yukihiro")
 matz.show_name # Yukihiro
 ```
 
-## Singleton Methods
+# Singleton Methods
 
 _Per-object methods, only available on the Object you defined it on_
 
@@ -208,7 +208,7 @@ other_car = Car.new
 other_car.inspect # => Cheap car
 ```
 
-### Inheritance
+## Inheritance
 
 ```Ruby
 class DerivedClass < BaseClass; end # if you want to end a Ruby statement without going to a new line, you can just type a semicolon.
@@ -224,7 +224,7 @@ end
 # Any given Ruby class can have only one superclass. Use mixins if you want to incorporate data or behavior from several classes into a single class.
 ```
 
-## Modules
+# Modules
 
 ```Ruby
 module ModuleName # module names are rather written in PascalCase
@@ -257,9 +257,9 @@ peter.jump # include
 Rabbit.jump # extend
 ```
 
-## Blocks & Procs
+# Blocks & Procs
 
-### Code Blocks
+## Code Blocks
 
 _Blocks are not objects._ Enclosed in do..end or {}.
 `yield`: run block
@@ -280,7 +280,7 @@ def explicit_block(&block)
 end
 ```
 
-### Proc
+## Proc
 
 _Saves blocks and are objects._ A proc is a saved block object.
 
@@ -297,7 +297,7 @@ adder = block { |a, b| a + b } # adder is now a Proc object
 adder.class # => Proc
 ```
 
-## Lambdas
+# Lambdas
 
 ```Ruby
 lambda { |param| block }
@@ -312,26 +312,26 @@ Diff between procs and lambdas:
 - a lambda checks the number of arguments passed to it, while a proc does not (This means that a lambda will throw an error if you pass it the wrong number of arguments, whereas a proc will ignore unexpected arguments and assign nil to any that are missing.)
 - when a lambda `return`s, it passes control back to the calling method; when a proc `return`s, it does so immediately, without going back to the calling method.
 
-## Operators
+# Operators
 
-### Comparison
+## Comparison
 
 - `==`, `!=`, `>`, `<`, `>=`, `<=` as normal
 - `<=>`: comparison, 0 if equal, 1 if a>b, -1 if a<b
 - `.eql?`: true if same type and values
 - `.equal?`: true if same object id
 
-### Assignment
+## Assignment
 
 - Assignment operators: `+=`, `-=`, `*=`, `/=`, `%=`, `**=` but NOT 1++ or 1--
 - `a, b, c = 10, 20, 30` is the same as `a = 10` `b = 10` `c = 10`
 
-### Calculation
+## Calculation
 
 - Normal: `+`, `-`, `*`, `/`, `%`, `**` (exponent)
 - The concatenation operator (<<) `"a" << "b" # =>"ab"`
 
-### Other
+## Other
 - `condition ? "true" : "false"`: ternary
 - `1..9`: inclusive range (1..9)
 - `1...9`: exclusive range (1..8)
@@ -339,7 +339,7 @@ Diff between procs and lambdas:
 - `.`: "message" operator -> reference class variables/methods
 - `::`: "scope" operator -> reference class variables/methods and constants/namespaced things
 
-## Commenting
+# Commenting
 
 ```Ruby
 =begin
@@ -352,11 +352,11 @@ Multyline comment
 # single line comment
 ```
 
-## Conditions
+# Conditions
 
 Note everything except `nil` and `false` are true (including `0`).
 
-### If
+## If
 
 ```Ruby
 if 1 < 2
@@ -371,7 +371,7 @@ puts "be printed" if true
 puts 3 > 4 ? "if true" : "else" # else will be putted
 ```
 
-### Unless
+## Unless
 
 ```Ruby
 unless false # unless checks if the statement is false (opposite to if).
@@ -383,7 +383,7 @@ end
 puts "not printed" unless true
 ```
 
-### Case
+## Case
 
 ```Ruby
 case my_var
@@ -409,14 +409,14 @@ end
 - problem = false
 - print "Good to go!" unless problem –– prints out because problem != true
 
-## Printing & Putting
+# Printing & Putting
 
 ```Ruby
 print "bla"
 puts "test" # puts the text in a separate line
 ```
 
-## String Methods
+# String Methods
 
 ```Ruby
 "Hello".length # 5
@@ -432,16 +432,16 @@ puts "test" # puts the text in a separate line
 :test.to_s # converts to "test"
 ```
 
-## User Input
+# User Input
 
 ```Ruby
 gets # is the Ruby equivalent to prompt in javascript (method that gets input from the user)
 gets.chomp # removes extra line created after gets (usually used like this)
 ```
 
-## Loops
+# Loops
 
-### While loop
+## While loop
 
 ```Ruby
 i = 1
@@ -451,7 +451,7 @@ while i < 11
 end
 ```
 
-### Until loop
+## Until loop
 
 ```Ruby
 i = 0
@@ -461,7 +461,7 @@ until i == 6
 end
 ```
 
-### For loop
+## For loop
 
 ```Ruby
 for i in 1...10 # ... tells ruby to exclude the last number (here 10 if we .. only then it includes the last num)
@@ -469,7 +469,7 @@ for i in 1...10 # ... tells ruby to exclude the last number (here 10 if we .. on
 end
 ```
 
-### Loop iterator
+## Loop iterator
 
 ```Ruby
 i = 0
@@ -480,7 +480,7 @@ loop do
 end
 ```
 
-### Next
+## Next
 
 ```Ruby
 for i in 1..5
@@ -489,7 +489,7 @@ for i in 1..5
 end
 ```
 
-### .each
+## .each
 
 ```Ruby
 things.each do |item| # foreach(item in things)
@@ -505,7 +505,7 @@ hashes.each do |x,y| # foreach(x,y in hashes)
 end
 ```
 
-### .times
+## .times
 
 ```Ruby
 10.times do
@@ -513,14 +513,14 @@ end
 end
 ```
 
-### .upto / .downto
+## .upto / .downto
 
 ```Ruby
 10.upto(15) { |x| print x, " " } # 10 11 12 13 14 15
 "a".upto("c") { |x| print x, " " } # a b c
 ```
 
-## Sorting & Comparing
+# Sorting & Comparing
 
 ```Ruby
 array = [5,4,1,3,2]
@@ -529,7 +529,7 @@ array.sort! # = [1,2,3,4,5] – works with text and other as well.
 array.sort! { |a, b| b <=> a } # to sort from Z to A instead of A to Z
 ```
 
-## Useful Methods
+# Useful Methods
 
 ```Ruby
 1.is_a? Integer # returns true
@@ -542,7 +542,7 @@ cube.call # implying that cube is a proc, call calls procs directly
 Time.now # displays the actual time
 ```
 
-## Tips
+# Tips
 
 Everything has a value
 ```Ruby

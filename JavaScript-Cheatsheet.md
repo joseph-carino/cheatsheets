@@ -2,40 +2,40 @@
 
 # JavaScript Cheatsheet
 
-## Table of Contents  
-[Basics](#basics)  
-[Arrays & Objects](#arrays--objects)    
-[Functions](#functions)  
-[Recursive Functions](#recursive-functions)  
-[Methods](#methods)  
-[Predefined Functions/Methods](#predefined-functionsmethods)  
-- [On Strings](#on-strings)  
-- [On Arrays](#on-arrays)  
-- [Nodes](#nodes)  
-[Custom Constructors / Classes](#custom-constructors--classes)  
-[Math](#math)  
-[Loops](#loops)  
+# Table of Contents
+[Basics](#basics)
+[Arrays & Objects](#arrays--objects)
+[Functions](#functions)
+[Recursive Functions](#recursive-functions)
+[Methods](#methods)
+[Predefined Functions/Methods](#predefined-functionsmethods)
+- [On Strings](#on-strings)
+- [On Arrays](#on-arrays)
+- [Nodes](#nodes)
+[Custom Constructors / Classes](#custom-constructors--classes)
+[Math](#math)
+[Loops](#loops)
 [Logical Operators](#logical-operators)
-- [Conditional Operator](#conditional-operator)  
-[User Input](#user-input)  
-[JSON](#json)  
-[ES6](#es6)  
+- [Conditional Operator](#conditional-operator)
+[User Input](#user-input)
+[JSON](#json)
+[ES6](#es6)
 [Tricks](#tricks)
 - [Get Password Combinations](#get-password-combinations)
 
-## Basics
-`&&`: and  
-`||`: or  
-`!`: not  
-`1`: true  
-`0`: false  
-**increments:**  
-i++ , i-- , i += x , i -= x  
-**isNaN('berry');** –– true –– returns true when not a number  
-**isNaN(42);**  –– false   
+# Basics
+`&&`: and
+`||`: or
+`!`: not
+`1`: true
+`0`: false
+**increments:**
+i++ , i-- , i += x , i -= x
+**isNaN('berry');** –– true –– returns true when not a number
+**isNaN(42);**  –– false
 x**.length** –– Returns the length of a string or the amount of items in a variable
-**typeof** variable –– returns object, number, string  
-**Z < a** –– true, uppercase < lowercase    
+**typeof** variable –– returns object, number, string
+**Z < a** –– true, uppercase < lowercase
 
 ```javascript
 // In browsers, the global scope object is stored in the window variable:
@@ -44,10 +44,10 @@ console.log("myVar" in window); // true
 console.log(window.myVar); // 10
 ```
 
-## Arrays & Objects:
+# Arrays & Objects:
 ```javascript
-var newArray = []; // could do variable = [1,2,3] as well 
-newArray.push('hello'); 
+var newArray = []; // could do variable = [1,2,3] as well
+newArray.push('hello');
 newArray[0]; // equals  ‘hello;
 var newObject = {
   key: value,
@@ -63,19 +63,19 @@ console.log("key" in anObject); // "in" returns a Boolean value that indicates w
 myObj.hasOwnProperty('name') // returns true if myObj has a name property
 ```
 
-## Functions:  
+# Functions:
 ```javascript
-var newFunction = function(argument,argument) { }; // or function newFunction(){} = function declarations = not part of the regular top-to-bottom flow = only use this form in the outermost block of a function or program. 
+var newFunction = function(argument,argument) { }; // or function newFunction(){} = function declarations = not part of the regular top-to-bottom flow = only use this form in the outermost block of a function or program.
 newFunction(x,y);
 // below are 3 new things for functions in JavaScript 6 (experimental for now)
 argument => argument + 1; // is equal to function(argument){ return argument + 1; };
 function(x = 7, y = 42) { } // to set default values
-function(x, y, ...a) { } // ...a will store all the  
+function(x, y, ...a) { } // ...a will store all the
 var newFunction = function() { return "hi" };
 newFunction // returns the function while newFunction() would return the functions outcome.
 ```
 
-## Recursive Functions
+# Recursive Functions
 ```javascript
 // Functions calling themselves (create a kindof finite loop)
 function power(base, exponent) {
@@ -105,7 +105,7 @@ function argumentCounter() {
 argumentCounter("Straw man", "Tautology", "Ad hominem"); // You gave me 3 arguments.
 ```
 
-## Methods:  
+# Methods:
 ```javascript
 var bob = new Object();
 bob.age = 17; // or: bob["age"] = 17; this way you can use variables as well: bob[variable];
@@ -149,8 +149,8 @@ console.log(test.height); //-> 3
 
 ```
 
-## Predefined Functions/Methods
-### On Strings
+# Predefined Functions/Methods
+## On Strings
 ```javascript
 /*
  * toUpperCase, toLowerCase, trim, charAt
@@ -165,7 +165,7 @@ console.log(test.height); //-> 3
  */
 '-'.repeat(2); //-> '--' (not supported by IE and Opera)
 ```
-### On Arrays
+## On Arrays
 ```javascript
 /*
  * Push, Pop, shift and unshift
@@ -226,12 +226,12 @@ function isBigEnough(element, index, array) { return element >= 10; }
 [12, 5, 8, 130, 44].some(isBigEnough);   // true
 
 ```
-## Nodes
+# Nodes
 ```javascript
 /*
  * Select children of an element with content
  * given: table > tr > td + td
- */ 
+ */
 var t = document.querySelector('#table');
 var td = t.content.querySelectorAll("td"); // nodelist [td, td]
 // note: without .content it would not be possible to select the childs.
@@ -247,7 +247,7 @@ var clone = document.importNode(t.content, true); // import/clone the content of
 tb[0].appendChild(clone); // append it to tbody
 ```
 
-## Custom Constructors / Classes:  
+# Custom Constructors / Classes:
 ```javascript
 // new Object(); is a predefined constructor by js that creates an empty object, we can create our own class constructors like so:
 function Person(name,age) {
@@ -262,7 +262,7 @@ function Dog (breed) {
 };
 
 var buddy = new Dog("golden Retriever");
-Dog.prototype.bark = function() { console.log("Woof"); }; // prototype adds that method to the constructor. Instead of buddy.bark = ... 
+Dog.prototype.bark = function() { console.log("Woof"); }; // prototype adds that method to the constructor. Instead of buddy.bark = ...
 buddy.bark();
 var snoopy = new Dog("Beagle");
 snoopy.bark(); // is also able to bark.
@@ -279,7 +279,7 @@ penguin.bark(); // Woof
 /*
  * defineProperty & hasOwnProperty
  */
-Object.prototype.nonsense = "hi"; // hi will be an enumerable property, hence show up in any for .. in .. loop on any object. To prevent that use defineProperty 
+Object.prototype.nonsense = "hi"; // hi will be an enumerable property, hence show up in any for .. in .. loop on any object. To prevent that use defineProperty
 for (var name in map) console.log(name); // → pizza // → touched tree // → nonsense
 delete Object.prototype.nonsense;
 Object.defineProperty(Object.prototype, "hiddenNonsense", {enumerable: false, value: "hi"});
@@ -293,7 +293,7 @@ for (var name in map) {
 }
 ```
 
-## Math:
+# Math:
 ```javascript
 // returns the largest of 2 numbers
 Math.max(10, 20) //-> 20
@@ -319,10 +319,10 @@ function getRandomIntInclusive(min, max) {
  */
 // Pythagorean theorem says that the square of the distance we are looking for is equal to the square of the x-coordinate plus the square of the y-coordinate thus **√(a2 + b2)** to calculate the distance to a point c:
 Math.sqrt(a * a + b * b);
-// or less chic: Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)); 
+// or less chic: Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
 ```
 
-## Loops:
+# Loops:
 ```javascript
 for(var i = 0; i < 6; i++){ }; // for a number of time
 for(var p in obj){ } // for in iterates a specified variable p over all the enumerable properties of an object
@@ -333,7 +333,7 @@ break; // terminate a loop, switch, or in conjunction with a label statement.
 ```
 
 
-## Logical Operators
+# Logical Operators
 ```javascript
 if(true){ /* */ } else if (true){ /* */ } else { /* */ }
 ```
@@ -341,19 +341,19 @@ if(true){ /* */ } else if (true){ /* */ } else { /* */ }
 switch(variable){ case 'option1': /* */ break; case 'option2': /* */ break; default: /* */ }
 ```
 
-### Conditional Operator
+## Conditional Operator
 ```javascript
 console.log(true ? 1 : 2); // → 1
 console.log(false ? 1 : 2); // → 2
 // The value before ? “picks” which of the other two values will come out. When true, the first value is chosen, and when false, the value on the right comes out.
 ```
 
-## User Input
+# User Input
 ```javascript
 var name = prompt("who're you?");
-```    
+```
 
-## JSON
+# JSON
 ```javascript
 // JSON.stringify takes a JavaScript value and returns a JSON-encoded string
 var string = JSON.stringify({name: "X", born: 1980});
@@ -362,16 +362,16 @@ console.log(string); // → {"name":"X","born":1980}
 console.log(JSON.parse(string).born); // → 1980
 ```
 
-## ES6
+# ES6
 ```javascript
 /*
- * Using glob variables in new objects 
+ * Using glob variables in new objects
  */
 var foo = 2;
 var obj = { bar: 1, foo } //-> obj.bar = 1 -> obj.foo = 2
 ```
 
-### Destructuring
+## Destructuring
 ```javascript
 var foo = {
   bar: 1,
@@ -400,25 +400,25 @@ calcBmi({ weight, height, max: 25 });
 calcBmi({ callback: function() {}, weight, height });
 ```
 
-### Default Arguments
+## Default Arguments
 ```javascript
 function someThing(value = 12){
   // stuff
 }
 ```
 
-### Template Strings
+## Template Strings
 ```javascript
 var name = "will";
 var thing = "party";
 // old way
 var greet = "hi, my name is" + name + "\n and I like to" + thing + "!";
 // new way. Note the inline variables and how to break lines.
-var greet = `hi, my name is ${name} 
+var greet = `hi, my name is ${name}
              and I like to ${thing} !`;
 ```
 
-### Scoping
+## Scoping
 ```javascript
 // let is the new var
 // define block variables (only used within blocks)
@@ -431,7 +431,7 @@ const a = 1;
 a = 2; //-> error
 ```
 
-### Classes
+## Classes
 ```javascript
 // old:
 function Parent() { /*constructor*/ }
@@ -473,7 +473,7 @@ child.baz(); // works
 child.foo(); // works
 ```
 
-### Arrow Functions
+## Arrow Functions
 ```javascript
 // basics
 // old
@@ -500,7 +500,7 @@ var module = {
 // note that it will overwrite i.e. jQuerys this value.
 ```
 
-### Modules
+## Modules
 ```javascript
 // old
 module.exports.foo = function () {};
@@ -519,7 +519,7 @@ export default {};
 import myModule from "myModule";
 ```
 
-### Generator Functions
+## Generator Functions
 ```javascript
 async function() {
   var friends = await $.get("http://bla.com/friends")
@@ -527,9 +527,9 @@ async function() {
 } // returns one promise that is denible
 ```
 
-## Tricks
+# Tricks
 
-### Get password combinations
+## Get password combinations
 
 ```javascript
 var passwords = function(chars, length){

@@ -1,10 +1,10 @@
-[back to overview](/../..)  
+[back to overview](/../..)
 
 # Solidity Cheatsheet
 
 Based on a [Udemy course](https://klarna.udemy.com/course/blockchain-developer/) and [Cryptozombies](https://cryptozombies.io/en/course/) and [solidity docs](https://docs.soliditylang.org)
 
-## Table of Contents
+# Table of Contents
 
 - [Basics](#basics)
 - - [Developing](#developing)
@@ -38,9 +38,9 @@ Based on a [Udemy course](https://klarna.udemy.com/course/blockchain-developer/)
 - - [Interacting with other contracts](#interacting-with-other-contracts)
 - [Ownership](#ownershio)
 
-## Basics
+# Basics
 
-### Developing
+## Developing
 
 Workspaces:
 
@@ -50,9 +50,9 @@ Interactive dev env. in the browser. Under Deploy and Run you can chose JavaScri
 - https://www.trufflesuite.com/ganache
 Development environment that runs locally on your machine
 
-### Fungible vs Non-Fungible Tokens
+## Fungible vs Non-Fungible Tokens
 
-#### Non-Fungible Tokens
+### Non-Fungible Tokens
 
 - Are unique
 - Non Divisible
@@ -60,7 +60,7 @@ Development environment that runs locally on your machine
 - ERC-721 Standard
 - i.e. a House
 
-#### Fungible Tokens
+### Fungible Tokens
 
 - Uniform
 - Divisible
@@ -68,13 +68,13 @@ Development environment that runs locally on your machine
 - ERC-20 & ERC-777 Standard
 - i.e. Gold
 
-### Crypto Hashing
+## Crypto Hashing
 
 - The same input gives always the same output
 - It is impossible to go back from the output to the input
 - Input and output are totally uncorrelated (a simple change will create a complete different output)
 
-#### Keccak256
+### Keccak256
 
 Ethereum has the hash function `keccak256` built in, which is a version of SHA3. A hash function basically maps an input into a random 256-bit hexadecimal number. A slight change in the input will cause a large change in the hash.
 
@@ -87,7 +87,7 @@ keccak256(abi.encodePacked("aaaab"));
 keccak256(abi.encodePacked("aaaac"));
 ```
 
-### Hello world
+## Hello world
 
 ```Solidity
 pragma solidity >=0.5.0 <0.6.0;
@@ -100,7 +100,7 @@ contract MyContract {
 - Any public variable automatically creates a getter function internally in solidity
 - Version Pragma: declares the version to use `pragma solidity >=0.5.0 <0.6.0;` using any version between 0.5.0 and 0.6.0
 
-### Typecasting
+## Typecasting
 
 ```Solidity
 uint8 a = 5;
@@ -111,7 +111,7 @@ uint8 c = a * b;
 uint8 c = a * uint8(b);
 ```
 
-### Addresses
+## Addresses
 
 - An address is owned by a specific user (or a smart contract).
 - So we can use it as a unique ID for ownership
@@ -135,17 +135,17 @@ function whatIsMyNumber() public view returns (uint) {
 }
 ```
 
-### Operators
+## Operators
 
 - Comparisons: <=, <, ==, !=, >=, > (evaluate to bool)
 - Bit operaBit operators: &, |, ^ (bitwise exclusive or), ~ (bitwise negation)
 - Shift operators: << (left shift), >> (right shift)
-- Arithmetic operators: +, -, unary -, *, /, % (modulo), ** 
+- Arithmetic operators: +, -, unary -, *, /, % (modulo), **
 (exponentiation)
 
-## Global Units
+# Global Units
 
-### Monetary
+## Monetary
 
 - A literal number can take a suffix of wei, finney, szabo or ether to specify a subdenomination of ether.
 - 1 wei == 1
@@ -153,7 +153,7 @@ function whatIsMyNumber() public view returns (uint) {
 - 1 finney == 1e15
 - 1 ether == 1e18
 
-### Time Units
+## Time Units
 
 - seconds, minutes, hours, days, weeks
 - 1 == 1 seconds
@@ -162,13 +162,13 @@ function whatIsMyNumber() public view returns (uint) {
 - 1 days == 24 hours
 - 1 week == 7 days
 
-### block & msg
+## block & msg
 
 [See docs](https://docs.soliditylang.org/en/develop/units-and-global-variables.html?highlight=special%20variables%20and%20functions#block-and-transaction-properties)
 
-## Global Properties
+# Global Properties
 
-### Address
+## Address
 - address: Holds a 20 byte value (size of an ethereum wallet)
 - address payable: Same but you can send money to it. i.e. address payable x = address(0x123);
 - <address>.balance (uint256): balance of the Address in Wei
@@ -178,7 +178,7 @@ function whatIsMyNumber() public view returns (uint) {
 - <address>.delegatecall(bytes memory) returns (bool, bytes memory): issue low-level DELEGATECALL with the given payload, returns success condition and return data, forwards all available gas, adjustable
 - <address>.staticcall(bytes memory) returns (bool, bytes memory): issue low-level STATICCALL with the given payload, returns success condition and return data, forwards all available gas, adjustable
 
-### Encoding
+## Encoding
 
 - abi.decode(bytes memory encodedData, (...)) returns (...): ABI-decodes the given data, while the types are given in parentheses as second argument. Example: (uint a, uint[2] memory b, bytes memory c) = abi.decode(data, (uint, uint[2], bytes))
 - abi.encode(...) returns (bytes memory): ABI-encodes the given arguments
@@ -186,7 +186,7 @@ function whatIsMyNumber() public view returns (uint) {
 - abi.encodeWithSelector(bytes4 selector, ...) returns (bytes memory): ABI-encodes the given arguments starting from the second and prepends the given four-byte selector
 - abi.encodeWithSignature(string memory signature, ...) returns (bytes memory): Equivalent to abi.encodeWithSelector(bytes4(keccak256
 
-### Block Properties
+## Block Properties
 
 - blockhash(uint blockNumber) returns (bytes32): hash of the given block - only works for 256 most recent, excluding current, blocks
 - block.coinbase (address payable): current block miner’s address
@@ -203,11 +203,11 @@ function whatIsMyNumber() public view returns (uint) {
 - tx.gasprice (uint): gas price of the transaction
 - tx.origin (address payable): sender of the tr
 
-### selfdestruct
+## selfdestruct
 
 - `selfdestruct(msg.sender);` destroys the smart contract and withdraws all the funds to the sender
 
-## State Variables
+# State Variables
 
 ```Solidity
 contract Example {
@@ -221,7 +221,7 @@ contract Example {
 - `uint`: unsigned integer (meaning: value must me non-negative) (uint is actually an alias for uint256, a 256-bit unsigned integer. You can declare uints with less bits — uint8, uint16, uint32, etc. Useful to save space and lower costs)
 - `int`: integer
 
-## Math operators
+# Math operators
 
 ```Solidity
 uint x = 5 ** 2; // equal to 5^2 = 25
@@ -234,7 +234,7 @@ uint x = 5 ** 2; // equal to 5^2 = 25
 - Modulus / remainder: x % y (for example, 13 % 5 is 3, because if you divide 5 into 13, 3 is the remainder)
 - Exponential operator: x ** y (i.e. "x to the power of y", x^y)
 
-## Structs
+# Structs
 
 ```Solidity
 struct Person {
@@ -260,7 +260,7 @@ people.push(satoshi);
 people.push(Person(16, "Vitalik"));
 ```
 
-## Arrays
+# Arrays
 
 ```Solidity
 // Array with a fixed length of 2 elements:
@@ -271,7 +271,7 @@ string[5] stringArray;
 uint[] dynamicArray;
 ```
 
-## Functions
+# Functions
 
 ```Solidity
 function eatHamburgers(string memory _name, uint _amount) private {
@@ -282,7 +282,7 @@ function eatHamburgers(string memory _name, uint _amount) private {
 - `private`: the function can only be called from within the contract. Functions are **public by default**, meaning they can be called from anywhere in the network.
 - `string memory _name`: store the _name variable in memory. This is required for all reference types such as arrays, structs, mappings, and strings. This indicates to store by reference not by value (see below)
 
-### Reference Types
+## Reference Types
 
 There are two ways in which you can pass an argument to a Solidity function:
 
@@ -317,10 +317,10 @@ contract SandwichFactory {
 
     // If you just want a copy, you can use `memory`:
     Sandwich memory anotherSandwich = sandwiches[_index + 1];
-    // ...in which case `anotherSandwich` will simply be a copy of the 
+    // ...in which case `anotherSandwich` will simply be a copy of the
     // data in memory, and...
     anotherSandwich.status = "Eaten!";
-    // ...will just modify the temporary variable and have no effect 
+    // ...will just modify the temporary variable and have no effect
     // on `sandwiches[_index + 1]`. But you can do this:
     sandwiches[_index + 1] = anotherSandwich;
     // ...if you want to copy the changes back into blockchain storage.
@@ -328,7 +328,7 @@ contract SandwichFactory {
 }
 ```
 
-### Function modifiers
+## Function modifiers
 
 ```Solidity
 function sayHello() public view returns (string memory) {}
@@ -356,13 +356,13 @@ function eat() internal {
 
 ```Solidity
 function eat() payable {
-  
+
 }
 ```
 
 - `payable`: makes it possible to send money to a function
 
-### Multiple Return Values
+## Multiple Return Values
 
 ```Solidity
 function multipleReturns() internal returns(uint a, uint b, uint c) {
@@ -385,7 +385,7 @@ function getLastReturnValue() external {
 }
 ```
 
-## Events
+# Events
 
 ```Solidity
 // declare the event
@@ -407,7 +407,7 @@ YourContract.IntegersAdded(function(error, result) {
 })
 ```
 
-## Mappings
+# Mappings
 
 ```Solidity
 // For a financial app, storing a uint that holds the user's account balance:
@@ -431,7 +431,7 @@ function whatIsMyNumber() public view returns (uint) {
 }
 ```
 
-## Contracts, Inheritance & Import
+# Contracts, Inheritance & Import
 
 ```Solidity
 contract Doge {
@@ -457,7 +457,7 @@ import "./someothercontract.sol";
 contract newContract is SomeOtherContract {}
 ```
 
-### Constructor
+## Constructor
 
 ```Solidity
 contract Doge {
@@ -467,7 +467,7 @@ contract Doge {
 
 The constructor is called only once during contract deployment
 
-### Interacting with other contracts
+## Interacting with other contracts
 
 To interact with other contracts we need to define an `interface`.
 
@@ -501,7 +501,7 @@ contract NumberInterface {
 }
 
 contract MyContract {
-  address NumberInterfaceAddress = 0xab38... 
+  address NumberInterfaceAddress = 0xab38...
   // ^ The address of the FavoriteNumber contract on Ethereum
   NumberInterface numberContract = NumberInterface(NumberInterfaceAddress);
   // Now `numberContract` is pointing to the other contract
@@ -516,7 +516,7 @@ contract MyContract {
 
 In this way, your contract can interact with any other contract on the Ethereum blockchain, as long they expose those functions as public or external.
 
-## Ownership
+# Ownership
 
 All smart contracts are publicly available on the blockchain (note: everything is, also the information in the variables within the smart contract, even the private ones). You'd have to use your own network if you want privacy or external resources. There is no concept of ownership. However we can use a little trick:
 

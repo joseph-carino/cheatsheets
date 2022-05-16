@@ -1,4 +1,4 @@
-## Save and Exit
+# Save and Exit
 
 Write and quit:
 
@@ -12,9 +12,9 @@ Quit without saving:
 :q!
 ```
 
-## Search and replace
+# Search and replace
 
-The :substitute command searches for a text pattern, and replaces it with a text string. There are many options, but these are what you probably want:  
+The :substitute command searches for a text pattern, and replaces it with a text string. There are many options, but these are what you probably want:
 
 ```bash
 :%s/foo/bar/g

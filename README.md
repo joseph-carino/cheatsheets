@@ -1,4 +1,4 @@
-Just another collection of CheatSheets.  
+Just another collection of CheatSheets.
 **living document – constantly updating**
 
 # Cheat Sheets
@@ -31,19 +31,19 @@ So far:
 
 # Helpers
 
-## Boilerplates
+# Boilerplates
 
 Find them in my [boilerplate project](https://github.com/ThibaultJanBeyer/tasks-starter-project).
 
-## Common
+# Common
 
-### OSX Bash script not executed "command not found".
+## OSX Bash script not executed "command not found".
 
 ```
 sudo chmod a+x ./app/build.sh
 ```
 
-### Install nodejs on ubuntu
+## Install nodejs on ubuntu
 
 https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 
@@ -52,7 +52,7 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-### Kill open port in OSX
+## Kill open port in OSX
 
 ```bash
 sudo lsof -i :<port>

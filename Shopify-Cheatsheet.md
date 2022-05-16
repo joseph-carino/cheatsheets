@@ -2,24 +2,25 @@
 
 # Shopify Cheatsheet<!-- omit in toc -->
 
+- [Terms](#terms)
 - [Spin](#spin)
-    - [Dev](#dev)
+- [Dev](#dev)
 - [Links](#links)
 
-## Terms
+# Terms
 
 - `3PL` - "Third-Party Logistics" - provides outsourced logistics services
 
 # Spin
 
-`spin up <repo> [--no-snapshots]` - create instance of <repo> from snapshot (or direct from main with --no-snapshots)
-`spin code` - open instance in vs code
-`spin open` - run instance in browser
-`spin shell` - connect to instance shell
-`spin list` - list all open instances
-`spin destroy [<instancename>|--all]` - destroy open instance(s)
+- `spin up <repo> [--no-snapshots]` - create instance of <repo> from snapshot (or direct from main with --no-snapshots)
+- `spin code` - open instance in vs code
+- `spin open` - run instance in browser
+- `spin shell` - connect to instance shell
+- `spin list` - list all open instances
+- `spin destroy [<instancename>|--all]` - destroy open instance(s)
 
-## Dev
+# Dev
 
 # Links
 - [Ruby Style Guide](https://github.com/Shopify/ruby-style-guide)

@@ -2,13 +2,13 @@
 
 # Firebase Cheatsheet
 
-## Table of Contents
+# Table of Contents
 
 - [Cloud Functions](#cloud-functions)
 
-## Cloud Functions
+# Cloud Functions
 
-### Install
+## Install
 
 ```bash
 npm install -g firebase-tools

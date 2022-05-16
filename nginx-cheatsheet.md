@@ -2,11 +2,11 @@
 
 # Nginx Cheatsheet
 
-## Table of Contents
+# Table of Contents
 
 …
 
-## Install
+# Install
 
 ```
 sudo apt update
@@ -19,7 +19,7 @@ Firewall
 sudo ufw allow 'Nginx Full'
 ```
 
-## Basics
+# Basics
 
 ```
 sudo systemctl stop nginx
@@ -36,7 +36,7 @@ Test if config files are correct:
 sudo nginx -t
 ```
 
-## Important Folders
+# Important Folders
 
 - `/var/www/html`: The actual web content, which by default only consists of the default Nginx page you saw earlier, is served out of the /var/www/html directory. This can be changed by altering Nginx configuration files.
 - `/etc/nginx`: The Nginx configuration directory. All of the Nginx configuration files reside here.
@@ -47,7 +47,7 @@ sudo nginx -t
 - `/var/log/nginx/access.log`: Every request to your web server is recorded in this log file unless Nginx is configured to do otherwise.
 - `/var/log/nginx/error.log`: Any Nginx errors will be recorded in this log.
 
-## Proxy
+# Proxy
 
 ```
 server {
@@ -67,7 +67,7 @@ server {
 
 - `rewrite` is effectively sending traffic to the blog app as if it was coming from `/` instead of `/blog`.
 
-### Full
+## Full
 
 ```
 sudo mkdir -p /var/www/example.com/html
@@ -142,7 +142,7 @@ http {
 sudo systemctl restart nginx
 ```
 
-## HTTPS
+# HTTPS
 
 We will use Let’s Encrypt to setup HTTPs routes
 
@@ -172,7 +172,7 @@ sudo certbot renew --dry-run
 If no errors ari seyou’re all set.
 
 
-## Quick adding of a Server Block
+# Quick adding of a Server Block
 
 ```bash
 sudo mkdir -p /var/www/neomatcha.com/html

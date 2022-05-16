@@ -2,13 +2,13 @@
 
 # HTML Email Development Cheatsheet
 
-## Sources:
+# Sources:
 - https://frontendmasters.com/courses/html-email-v2/background-images/
 - https://github.com/rodriguezcommaj/frontendmasters
 - https://codepen.io/collection/21b7ddd5c58aafc450c35c46e7cba9b5?grid_type=list
 
-## Table of Contents  
-- [Basics](#basics)  
+# Table of Contents
+- [Basics](#basics)
 - - [Basic HTML Email](#basic-html-email)
 - - [CSS Resets](#css-resets)
 - - [Email friendly HTML](#email-friendly-html)
@@ -22,7 +22,7 @@
 - [Mobile Emails](#mobile-emails)
 - [Interactivity](#interactivity)
 
-## Basics
+# Basics
 
 - Marketing emails should have unsubscribe links
 - Use email testing tools like [email on acid](https://www.emailonacid.com/) or [litmus](https://www.litmus.com/extension/)
@@ -31,7 +31,7 @@
 - You can use tools to help you build emails like `Litmus builder`, `mjml.io`, `Inky` (from foundation.zurb), `Maizzle` to help you.
 - Support channels: `email.geeks.chat`, `litmus.com/community`, `thebetter.email`
 
-### Basic HTML Email
+## Basic HTML Email
 
 The basic HTML for Emails looks pretty much like the basic HTML for a website
 
@@ -44,11 +44,11 @@ The basic HTML for Emails looks pretty much like the basic HTML for a website
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Document</title>
   <style type="text/css">
-    
+
   </style>
 </head>
 <body id="body" style="margin: 0 !important; padding: 0 !important;">
-  
+
 </body>
 </html>
 ```
@@ -56,7 +56,7 @@ The basic HTML for Emails looks pretty much like the basic HTML for a website
 - `lang` make sure to pass the proper lang for screen readers to know in which language tho read the text
 - `body style=` we want to reset the margins and paddings to make sure that the email client does not add something weird to our emails
 
-### CSS Resets
+## CSS Resets
 
 - Email clients add CSS to parts of the email on their own. I.e. highlighting times, phones, dates etc (to add to the calendar or call)
 - We want to keep the behavior but improve it's styling
@@ -111,14 +111,14 @@ Taken from [Rodrigues Commajs example](https://github.com/rodriguezcommaj/fronte
 - style resets: make sure the doc. renders as intended
 - Link overrides: to make sure that the links that are automatically added by the email client don't get custom styling
 
-### Email friendly HTML
+## Email friendly HTML
 
 - Use these for most things: `div`, `span`, `h1`-`h6`, `p`, `strong`, `em`, `img` (simple html tags)
 - Most structuring is done with `table`s
 - All URLs should be absolute URIs that also contain the protocol, not relative. So `https://google.com/image.jpg` instead of `/image.jpg` or `google.com/image.jpg`.
 - `<center></center>` is completely deprecated but can be used to centering parts in outlook.
 
-### Email friendly CSS
+## Email friendly CSS
 
 - Don’t use Linked Stylesheets. A lot of email clients will remove those. Use embedded styles or even better inline styles.
 - For text: `color`, `font-family`, `font-size`, `font-style`, `font-weight`, `line-height`, `text-align`.
@@ -127,14 +127,14 @@ Taken from [Rodrigues Commajs example](https://github.com/rodriguezcommaj/fronte
 - Use pixel sizing `px` instead of relative units etc.
 - You can use shorthands. i,e, `margin: 40px 0;` or `margin: 0 auto` to center the content
 
-## Links & Buttons
+# Links & Buttons
 
 - Don't use images for buttons
 - Use descriptive links (not this "click here", use "read the article" for example)
 - Embrace link conventions (i.e. blue and underlined text for links)
 - Don't just rely on color. Don't underline things that are not links (might frustrate the user into thinking it's a link)
 
-### Bulletproof buttons
+## Bulletproof buttons
 
 - from https://buttons.cm/ (most reliable):
 ```html
@@ -182,13 +182,13 @@ style="background-color:#556270;background-image:url(https://i.imgur.com/0xPEf.g
 </table>
 ```
 
-## Images
+# Images
 
 - Make them responsive by default
 - Use alt text describing the image
 - Stick to standards: jpg, png, gif
 
-### Responsive Images
+## Responsive Images
 
 - Set a fixed width for outlook `<img … width="600" border="0" … >`
 - `display: block; max-width: 100%; min-width: 100px; width: 100%;` to make them adjust across screen sizes
@@ -198,7 +198,7 @@ i.e.
 <img width="600" border="0" style="display: block; max-width: 100%; min-width: 100px; width: 100%" src="img/image.jpg" alt="puppy licking ice-cream">
 ```
 
-### Background Images
+## Background Images
 
 - Most reliable on table cells (td)
 - Use both: HTML attributes and inline CSS
@@ -206,9 +206,9 @@ i.e.
 i.e.
 ```html
 <td background="image/bg.jpg" bgcolor="#229efd" style="background: #229efd url('image/bg.jpg')">
-``` 
+```
 
-## Accessibility
+# Accessibility
 
 - Left align longer text (center align only short text/headings etc.)
 - Keep color contrast high
@@ -220,11 +220,11 @@ i.e.
 - Include text alternatives for images
 - Include the language of an email `lang="de"`
 
-### Testing
+## Testing
 
 - Close your eyes and use a real screen reader: NVDA, VoiceOver, JAWS, Browser Extensions (NoCoffeee Vision Simulator, silktide, toadly, lighthouse), Litmus accessibility checker.
 
-## Layouts
+# Layouts
 
 - Think in modules
 - Use `role="presentation"` on any table
@@ -233,7 +233,7 @@ i.e.
 - Override defaults using HTML attributes
 - Most styles should be included in table tags
 
-Boilerplate: 
+Boilerplate:
 ```html
 <!-- Outer Fluid Container Table -->
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
@@ -261,7 +261,7 @@ Boilerplate:
 
 - Basic structure is: Fluid table => Fixed table => Fluid table => Fixed table
 
-## Mobile Emails
+# Mobile Emails
 
 - For emails it makes sense to design in desktop first because otherwise you'd get the mobile version on the desktop as the queries don't always work.
 - You can use media queries
@@ -277,7 +277,7 @@ i.e.
 
 And add them to the tables i.e. to make them stack.
 
-### Hybrid/Spongy Coding
+## Hybrid/Spongy Coding
 
 - Fluid by default
 - max-width
@@ -299,7 +299,7 @@ And add them to the tables i.e. to make them stack.
 - `gte` = greater than or equal, `gt` = greater than, `lte` = less than equal to, `lt` = less than.
 - `9` = Outlook 2000, `10` = 2002, …, `15` = Outlook 2013
 
-## Interactivity
+# Interactivity
 
 - `:hover` pseudo selector works (only when included in the header)
 - gifs

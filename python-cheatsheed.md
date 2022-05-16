@@ -1,4 +1,4 @@
-## Integer and Float Calc
+# Integer and Float Calc
 
 ```python
 100/6 = 16 # python keeps the number type
@@ -7,7 +7,7 @@ float(100)/6 = 16,6666666668 # same
 100/6 = 16,6666666668 # in python3 the conversion happens automatically
 ```
 
-## Strings
+# Strings
 
 ```python
 my_string = 'string'
@@ -20,7 +20,7 @@ string
 """
 ```
 
-### Formatting
+## Formatting
 
 ```python
 day = 6
@@ -37,7 +37,7 @@ print "Let's not go to %s. 'Tis a silly %s." % (string_1, string_2)
 # Let's not go to Camelot. 'Tis a silly place.
 ```
 
-### Methods
+## Methods
 
 ```python
 len("foo") #=> 3
@@ -56,7 +56,7 @@ str(3) #=> "3"
 "moo"[1:len(new_word)] #=> "oo"
 ```
 
-## Comments
+# Comments
 
 ```python
 # I’m a single line comment
@@ -66,14 +66,14 @@ line comment
 """
 ```
 
-## Booleans
+# Booleans
 
 ```python
 a = True
 b = False
 ```
 
-## Conditions
+# Conditions
 
 ```python
 c = 1 < 2 and 2 < 3 #=> True
@@ -96,7 +96,7 @@ print greater_less_equal_5(5) #=> 0
 print greater_less_equal_5(6) #=> 1
 ```
 
-## Type Conversions
+# Type Conversions
 
 ```python
 "I’m " + str(13) # => "I’m 13"
@@ -104,7 +104,7 @@ print greater_less_equal_5(6) #=> 1
 3 + int(7.9) # => 10
 ```
 
-## Console
+# Console
 
 ```python
 foo = raw_input("What is your name? ")
@@ -112,7 +112,7 @@ foo = raw_input("What is your name? ")
 
 Prompts for user input in console
 
-## Date & Time
+# Date & Time
 
 ```python
 from datetime import datetime

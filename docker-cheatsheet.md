@@ -2,7 +2,7 @@
 
 # Docker Cheatsheet
 
-## Table of Contents
+# Table of Contents
 
 - [Install](#install)
 - - …
@@ -32,30 +32,30 @@
 - [Troubleshooting](#troubleshooting)
 - - [Permission denied](#permission-denied)
 
-## Install
+# Install
 
-Docker: https://www.docker.com/products  
-Docker Compose: https://docs.docker.com/compose/install/  
+Docker: https://www.docker.com/products
+Docker Compose: https://docs.docker.com/compose/install/
  https://github.com/docker/compose/releases
 
-### Linux
+## Linux
 
-#### Docker
+### Docker
 
 ```
 wget -qO- https://get.docker.com/ | sh
 ```
 
-#### Docker-Compose
+### Docker-Compose
 
 ```
 curl -L https://github.com/docker/compose/releases/download/1.23.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 
-## Basics
+# Basics
 
-### What are Containers
+## What are Containers
 
 A _virtual machine_ grabs CPU, MEM, DISKIO, NETWORK, etc. and slices it into virtual variants to build virtual machines that look and feel like real physical servers.
 
@@ -63,7 +63,7 @@ Docker on the other hand, instead of slicing physical resources it slices operat
 
 Docker creates more like a virtual operating system that share the same physical resources. Which is way more lightweight than virtual machines.
 
-### Version
+## Version
 
 ```
 docker -v
@@ -73,7 +73,7 @@ Shows Version of client and server.
 
 Docker Client is the interface that takes commands and run the respective API calls to the Deamon.
 
-### Info
+## Info
 
 ```
 docker info
@@ -87,9 +87,9 @@ docker node ls
 
 lists all docker nodes in a swarm
 
-## Containers
+# Containers
 
-### Run
+## Run
 
 ```
 docker run hello-world
@@ -101,21 +101,21 @@ docker run hello-world
 docker run -d --name web -p 80:8080 foo/bar
 ```
 
-`-d`: run in background  
-`--name web`: give it a friendly unique name  
-`-p 80:8080`: map a port inside the container (here 8080) to a port on the machine (here 80)  
+`-d`: run in background
+`--name web`: give it a friendly unique name
+`-p 80:8080`: map a port inside the container (here 8080) to a port on the machine (here 80)
 `foo/bar`: get the image named `bar` from user `foo`
 
 ```
 docker run -it --name temp ubuntu:latest /bin/bash
 ```
 
-`-it`: in interactive terminal mode (ssh inside the container)  
-`/bin/bash`: run bash process (give me a terminal that allows me to interact with that container)  
-You usually don’t do that.  
+`-it`: in interactive terminal mode (ssh inside the container)
+`/bin/bash`: run bash process (give me a terminal that allows me to interact with that container)
+You usually don’t do that.
 Inside, you can run `ctrl+P+Q` to quit without exiting the process.
 
-### list
+## list
 
 ```bash
 docker ps
@@ -126,7 +126,7 @@ docker ps -aq
 
 see [Processes](#processes)
 
-### start / stop / rm
+## start / stop / rm
 
 ```
 docker start <container>
@@ -140,10 +140,10 @@ docker rm <container>
 docker stop $(docker ps -aq)
 ```
 
-runs docker stop against the output of `docker ps -aq`:  
+runs docker stop against the output of `docker ps -aq`:
 `-aq`: all containers in quiet mode (q = just the IDs).
 
-### exec
+## exec
 
 ```
 docker exec <id> <command>
@@ -152,7 +152,7 @@ docker exec d63 node foo.js
 
 Executes a command inside a running docker container
 
-### logs
+## logs
 
 ```
 docker logs <id>
@@ -160,7 +160,7 @@ docker logs <id>
 
 Outputs the logs of that container
 
-### "SSH" (Bash) into a container
+## "SSH" (Bash) into a container
 
 1. Use docker ps to get the name of the existing container.
 2. Get a bash shell in the container.
@@ -171,13 +171,13 @@ docker exec -it <container name> /bin/bash
 
 _Note: Generically, use `docker exec -it <container name> <command>` to execute whatever command you specify in the container._
 
-## Container Volumes
+# Container Volumes
 
 ```
 docker run -p 80:8080 -v $(pwd):/var/www node
 ```
 
-`-v <host-location>:<location>`: create a volume. `<location>` is the container volume (alias inside the container). `<host-location>` is the location on your computer.  
+`-v <host-location>:<location>`: create a volume. `<location>` is the container volume (alias inside the container). `<host-location>` is the location on your computer.
 `$(pwd)`: current working directory.
 
 ```
@@ -191,7 +191,7 @@ docker run -p <h-port>:<c-port> -v <h-location>:<c-location> -w "<location>" <im
 # Example: docker run -p 80:8080 -v $(pwd):/var/www -w "/var/www" node npm start
 ```
 
-`-w "<location>"`: specifies the working directory inside the container (where the command will be run).  
+`-w "<location>"`: specifies the working directory inside the container (where the command will be run).
 `<command>`: will be run after container creation. Example `npm start`.
 
 ```
@@ -200,13 +200,13 @@ docker rm -v <container>
 
 `-v`: also removes the container that was created/managed by docker (outside of the container). _Note: It will not remove your source code if you specified any._
 
-## Container Communication
+# Container Communication
 
-Options:  
-Use Legacy Linking  
+Options:
+Use Legacy Linking
 Add containers to Bridge Network (preffered)
 
-### Legacy Linking
+## Legacy Linking
 
 Linking containers by name:
 
@@ -222,7 +222,7 @@ docker run -d --name <name> <image>
 docker run -d --name my-postgres postgres
 ```
 
-`-d`: run in background  
+`-d`: run in background
 `<name>`: give container a name
 
 2. link to running container by name
@@ -235,10 +235,10 @@ docker run -d -p 80:8080 --link my-postgres:postgres johndoe/foobar
 
 `--link`: links the container to a running container where `<c-name>` is the container name and `<alias>` an alias we give the container-link internally.
 
-Like that containers can speak to each other.  
+Like that containers can speak to each other.
 For example: when you give the link an alias as we did in the example above. Inside that second container you can call that first container by calling the alias. Instead of for example `localhost:5000`, you would do `postgres:5000`.
 
-### Container Networks
+## Container Networks
 
 Allows to isolate containers in groups.
 
@@ -261,14 +261,14 @@ docker run -d --net=<network-name> --name <name> <image>
 docker run -d --net=my_isolated_network --name myMongo mongo
 ```
 
-`--net=<network-name>`: run container into that specific network  
-`--name`: give it a name to link to ("link" to this container by name / = server name to reference)  
+`--net=<network-name>`: run container into that specific network
+`--name`: give it a name to link to ("link" to this container by name / = server name to reference)
 _Note: linking === communicating_
 
-Official name of this technique: `Container networking With Bridge Driver`.  
+Official name of this technique: `Container networking With Bridge Driver`.
 Is used similarely as legacy linking when it comes to code.
 
-#### Inspecting
+### Inspecting
 
 ```
 docker network inspect my_isolated_network
@@ -276,7 +276,7 @@ docker network inspect my_isolated_network
 
 will list information about the network, including linked containers
 
-## Processes
+# Processes
 
 ```
 docker ps
@@ -296,7 +296,7 @@ docker ps -aq
 
 List all processes running and not running but only their IDs (quiet)
 
-## Images
+# Images
 
 ```
 docker images
@@ -328,9 +328,9 @@ docker rmi $(docker images -q)
 
 removes all images (rocker rmi => docker images -q (= all image ids))
 
-## Custom Images
+# Custom Images
 
-### Dockerfile
+## Dockerfile
 
 Example Dockerfile:
 
@@ -352,24 +352,24 @@ EXPOSE      $PORT
 ENTRYPOINT  ["node", "server.js"]
 ```
 
-`FROM`: a base image where it will be build ontop  
-`MAINTAINER`: name of the person maintaining that file  
-`ENV`: set environment variables for the container  
-`COPY`: will bake the code inside the volume layer of that image  
-`WORKDIR`: where does it run the code?  
-`VOLUME`: attach one or more volumes from the docker host (the one environment that will run the image)  
-`RUN`: code to run when building  
-`EXPOSE`: ports to expose. `$PORT` is the environment variable set earlier.  
+`FROM`: a base image where it will be build ontop
+`MAINTAINER`: name of the person maintaining that file
+`ENV`: set environment variables for the container
+`COPY`: will bake the code inside the volume layer of that image
+`WORKDIR`: where does it run the code?
+`VOLUME`: attach one or more volumes from the docker host (the one environment that will run the image)
+`RUN`: code to run when building
+`EXPOSE`: ports to expose. `$PORT` is the environment variable set earlier.
 `ENTRYPOINT`: code to run when starting
 
-### Build an image
+## Build an image
 
 ```
 docker build -f <dockerfile> -t <username>/<imagetag> <context>
 ```
 
-`-t`/`--t`: tag the build (to be found on dockerhost)  
-`context`: what context it will be build from (i.e. where the dockerfile is)  
+`-t`/`--t`: tag the build (to be found on dockerhost)
+`context`: what context it will be build from (i.e. where the dockerfile is)
 `-f`: where the dockerfile is located (and how it is named)
 
 Usual flow for node:
@@ -379,7 +379,7 @@ rm -r node_modules
 docker build -f Dockerfile -t johndoe/mynode .
 ```
 
-### Publish image to docker hub
+## Publish image to docker hub
 
 ```
 docker push <username>/<imagetag>
@@ -394,7 +394,7 @@ docker push <username>/<imagetag>
 
 Pushes to a public repo on your dockerhub
 
-### Publish image to private docker repository
+## Publish image to private docker repository
 
 Instead of username use the repository location:
 
@@ -410,11 +410,11 @@ docker push <location>/<imagetag>
 # Example: docker push example.com/mynode
 ```
 
-## Docker Compose
+# Docker Compose
 
 Useful to manage automatically different lifecycles of services.
 
-### File
+## File
 
 docker-compose.yml
 
@@ -489,7 +489,7 @@ networks:
     driver: bridge
 ```
 
-### Commands
+## Commands
 
 ```
 docker-compose build
@@ -502,15 +502,15 @@ docker-compose rm
 docker-compose scale <servicename>=<amount>
 ```
 
-`build`: builds the images  
-`up/down`: starts/stops the built images as containers (down also removes the containers `docker-compose down --rmi all --volumes` will remove all containers, all their images and the docker managed volumes)  
-`logs`: shows the output of the containers  
-`ps`: lists the services  
+`build`: builds the images
+`up/down`: starts/stops the built images as containers (down also removes the containers `docker-compose down --rmi all --volumes` will remove all containers, all their images and the docker managed volumes)
+`logs`: shows the output of the containers
+`ps`: lists the services
 `stop/start/rm`: stops/starts/removes the services
 
 _Note: you can also run all commands on a single service by adding the name. I.e. `docker-compose up --no-deps node`. Latter will run the node container without any service dependencies._
 
-### Example structure
+## Example structure
 
 ```
 .docker/
@@ -557,9 +557,9 @@ Example of setup on pluralsight:
 https://app.pluralsight.com/player?course=docker-web-development&author=dan-wahlin&name=docker-web-development-m7&clip=5&mode=live
 ```
 
-#### Dockerfile Examples
+### Dockerfile Examples
 
-##### nginx
+#### nginx
 
 ```dockerfile
 FROM nginx:latest
@@ -572,7 +572,7 @@ EXPOSE 80 443
 ENTRYPOINT ["nginx"]
 ```
 
-##### node
+#### node
 
 ```dockerfile
 FROM node:latest
@@ -584,22 +584,22 @@ EXPOSE 8080
 ENTRYPOINT ["pm2", "start", "server.js", "--name", "foo", "--log", "/var/log/pm2/pm2.log", "etc…"]
 ```
 
-## Swarm
+# Swarm
 
 ```bash
 docker swarm init --advertise-addr <ip>:<port> --listen-addr <ip>:<port>
 # Example: docker swarm init --advertise-addr 213.244.192.13:2377 --listen-addr 213.244.192.13:2377
 ```
 
-`--advertise-addr <ip>:<port>`: no matter how many NICs and IPs, this is the one to use for swarm related stuff as using the API  
+`--advertise-addr <ip>:<port>`: no matter how many NICs and IPs, this is the one to use for swarm related stuff as using the API
 `--listen-addr <ip>:<port>`: what the node listens on for swarm manager traffic
 
-All nodes will have to be able to reach this IP.  
-Any Port will work but native engine port is `2375`, secure engine is `2376`, so `2377` is the unofficial swarm port.  
-Also add these 2 commands to each manager and each worker.  
+All nodes will have to be able to reach this IP.
+Any Port will work but native engine port is `2375`, secure engine is `2376`, so `2377` is the unofficial swarm port.
+Also add these 2 commands to each manager and each worker.
 **Important: these IPs are the Worker/Managers OWN IPs (not the lead manager ip)**
 
-### List nodes
+## List nodes
 
 ```
 docker node ls
@@ -607,17 +607,17 @@ docker node ls
 
 lists all docker nodes in a swarm. Can only be run by managers
 
-### Add managers
+## Add managers
 
 ```
 docker swarm join-token manager
 ```
 
-Gives the exact command to add managers to the swarm.  
-Managers are also acting as workers.  
+Gives the exact command to add managers to the swarm.
+Managers are also acting as workers.
 Add `--advertise-addr <server-ip>:2377 --listen-addr <server-ip>:2377` at the end of the command. Make sure, that `server-ip` is the IP of the server you’re currently on.
 
-### Add workers
+## Add workers
 
 ```
 docker swarm join-token worker
@@ -625,7 +625,7 @@ docker swarm join-token worker
 
 Gives the exact command to add workers to the swarm
 
-### Make worker a manager
+## Make worker a manager
 
 ```
 docker node promote <id>
@@ -633,19 +633,19 @@ docker node promote <id>
 
 Promotes a worker to become a manager.
 
-## Services
+# Services
 
 ```
 docker service <create | ls | ps | inspect | update | rm>
 ```
 
-### Inspect
+## Inspect
 
 ```
 docker service inspect --pretty <name>
 ```
 
-### Create
+## Create
 
 ```
 docker service create --name <name> -p <port>:<port> --replicas <amount> <image>
@@ -654,7 +654,7 @@ docker service create --name <name> -p <port>:<port> --replicas <amount> <image>
 `-p`: maps ports accross entire service
 `--replicas`: how many tasks inside the service (distribute task around X worker nodes in the network. When one goes down, anotherone takes over)
 
-### Remove
+## Remove
 
 ```
 docker service rm <name>
@@ -662,19 +662,19 @@ docker service rm <name>
 
 removes the service
 
-### Scaling
+## Scaling
 
 ```
 docker service scale <name>=<amount>
 ```
 
-Is an alias for: `docker service update --replicas <amount> <name>`  
-`name`: the name of the service to scale  
+Is an alias for: `docker service update --replicas <amount> <name>`
+`name`: the name of the service to scale
 `amount`: the amount of replicas it should have
 
 Keep in mind. Adding new nodes to the deck does not automatically rescale the cluster.
 
-### Rolling updates
+## Rolling updates
 
 ```
 docker service update --image <image>:<version> --update-parallelism <number> --update-delay <time>s <service-name>
@@ -695,7 +695,7 @@ Force-update/recreate it -
 $ docker service update --force MY-APP_nginx
 ```
 
-### Stack (docker-compose service)
+## Stack (docker-compose service)
 
 ```bash
 docker stack deploy --compose-file=docker-compose.yml
@@ -709,9 +709,9 @@ docker stack rm
 
 Same as `docker-compose down`
 
-## Useful
+# Useful
 
-### Create an ubuntu dev-environement in seconds:
+## Create an ubuntu dev-environement in seconds:
 
 ```bash
 docker run \
@@ -723,21 +723,21 @@ docker run \
 
 Will start a docker ubuntu machine and bind some volume to `src` into the machine. Now you can play around from within the terminal.
 
-### SSH into a running container
+## SSH into a running container
 
 ```bash
 docker exec -it <container name> /bin/bash
 ```
 
-### Copy files from Docker container to host
+## Copy files from Docker container to host
 
 ```bash
 docker cp <containerId>:/file/path/within/container /host/path/target
 ```
 
-### Own Private Docker-Registry
+## Own Private Docker-Registry
 
-#### Create Docker Registry
+### Create Docker Registry
 
 ```bash
 mkdir ~/docker-registry && cd $_
@@ -758,7 +758,7 @@ services:
       - ./data:/data
 ```
 
-#### Setup Nginx port forwarding
+### Setup Nginx port forwarding
 
 You should have your domain setup. Follow the [nginx-cheatsheet](../../nginx-cheatsheet.md) for this. In there I explain how to setup and secure `/etc/nginx/sites-available/example.com`.
 
@@ -792,7 +792,7 @@ cd ~/docker-registry
 docker-compose up
 ```
 
-#### Adding Authentification
+### Adding Authentification
 
 ```bash
 sudo apt install apache2-utils -y
@@ -821,7 +821,7 @@ Now edit the `docker-compose.yml`:
       ...
 ```
 
-#### Starting Docker Registry as a Service
+### Starting Docker Registry as a Service
 
 edit `docker-compose.yml`
 
@@ -836,7 +836,7 @@ edit `docker-compose.yml`
 docker-compose up -d
 ```
 
-#### Increasing File Upload Size for Nginx
+### Increasing File Upload Size for Nginx
 
 ```bash
 sudo vim /etc/nginx/nginx.conf
@@ -855,7 +855,7 @@ http {
 sudo service nginx restart
 ```
 
-#### Commands
+### Commands
 
 - List all repositories (effectively images):
 
@@ -875,16 +875,16 @@ curl -X GET https://example.com/v2/ubuntu/tags/list
 
 https://medium.com/better-programming/cleanup-your-docker-registry-ef0527673e3a
 
-Remove the files locally (stored in the `/data` folder). 
+Remove the files locally (stored in the `/data` folder).
 Then run:
 
 ```bash
 docker exec registry bin/registry garbage-collect --dry-run /etc/docker/registry/config.yml
 ```
 
-## Troubleshooting
+# Troubleshooting
 
-### Permission denied
+## Permission denied
 
 If you get following error:
 ```bash
@@ -897,6 +897,6 @@ You’ll have to add your user to the `docker` group:
 sudo usermod -a -G docker <user>
 ```
 
-Replace `<user>` with your user account. (You can find your user account name by typing `whoami` in the console)  
+Replace `<user>` with your user account. (You can find your user account name by typing `whoami` in the console)
 And then restart your console (or open a new one) for the changes to take effect.
 

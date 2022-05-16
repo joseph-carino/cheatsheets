@@ -2,18 +2,18 @@
 
 # Django Cheatsheet
 
-## Table of Contents
+# Table of Contents
 
 [Install](#install)
 [Basics](#basics)
 
-## Install
+# Install
 
-Python: https://www.python.org/  
-Django: `pip install Django`  
+Python: https://www.python.org/
+Django: `pip install Django`
 No pip? `sudo apt-get install python3-pip`
 
-### VSCode
+## VSCode
 
 for plint to work correctly, add the following to your settings.json:
 
@@ -24,17 +24,17 @@ for plint to work correctly, add the following to your settings.json:
 ]
 ```
 
-## Basics
+# Basics
 
-## Setup
+# Setup
 
-### Scaffold a project
+## Scaffold a project
 
 ```
 django-admin startproject <name>
 ```
 
-### The development server
+## The development server
 
 ```
 python manage.py runserver <ip>:<port>
@@ -42,15 +42,15 @@ python manage.py runserver <ip>:<port>
 
 Where IP and PORT are optional
 
-### Create a Project APP
+## Create a Project APP
 
 ```
 python manage.py startapp <name>
 ```
 
-### Database Setup
+## Database Setup
 
-#### Add Database
+### Add Database
 
 Django comes with sql light by default. If you wish to use another database, install the appropriate database bindings and change the following keys in the DATABASES 'default' item to match your database connection settings:
 
@@ -59,7 +59,7 @@ Django comes with sql light by default. If you wish to use another database, ins
 
 If you are not using SQLite as your database, additional settings such as USER, PASSWORD, and HOST must be added. For more details, see the reference documentation for DATABASES.
 
-#### Add Database Tables
+### Add Database Tables
 
 Inside `mysite/settings.py` you’ll find a list of `INSTALLED_APPS`. Most of them need a database table to work. To create those tables, run:
 
@@ -67,11 +67,11 @@ Inside `mysite/settings.py` you’ll find a list of `INSTALLED_APPS`. Most of th
 python manage.py migrate
 ```
 
-#### Models & Migrations
+### Models & Migrations
 
 https://www.youtube.com/watch?v=aHC3uTkT9r8
 
-### Create a superuser
+## Create a superuser
 
 ```shell
 python manage.py createsuperuser

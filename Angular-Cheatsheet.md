@@ -2,17 +2,17 @@
 
 # Angular Cheatsheet
 
-##### Table of Contents
+#### Table of Contents
 
-[Basics](#basics)  
-[Loop](#loop)  
-[Html](#html)  
-[Directives](#directives)  
-[Services](#services)  
-[Routing](#routing)  
+[Basics](#basics)
+[Loop](#loop)
+[Html](#html)
+[Directives](#directives)
+[Services](#services)
+[Routing](#routing)
 [Filters](#filters)
 
-## Basics
+# Basics
 
 **Setup**
 
@@ -32,7 +32,7 @@ var app = angular.module("myApp", []);
 <body ng-app="myApp">
 ```
 
-See: [more info on ng-app](https://docs.angularjs.org/api/ng/directive/ngApp)  
+See: [more info on ng-app](https://docs.angularjs.org/api/ng/directive/ngApp)
 This is called “Bootstrapping”. Sometimes you want to [do it manually](https://docs.angularjs.org/guide/bootstrap#manual-initialization) (if you have multiple Angular apps for instance).
 
 3. Create a new controller: manages the app's data.
@@ -57,19 +57,19 @@ app.controller("MainController", [
 
 We access $scope.title using {{ title }}. That’s an expression: used to display values on the page.
 
-### Namings
+## Namings
 
-**Binding** –– {{ ... }}  
-**Expressions** –– something + '!'  
-**Directives** ––  
-**Template** –– (the part of the view containing the bindings and presentation logic) acts as a blueprint for how our data should be organized and presented to the user.  
-**Controller** –– provides the context in which the bindings are evaluated and applies behavior and logic to our template.  
-**Model** –– What the user sees after the page is fully rendered  
-**Module** –– Child on Angular (usually it is the App in an Angular point of view)  
+**Binding** –– {{ ... }}
+**Expressions** –– something + '!'
+**Directives** ––
+**Template** –– (the part of the view containing the bindings and presentation logic) acts as a blueprint for how our data should be organized and presented to the user.
+**Controller** –– provides the context in which the bindings are evaluated and applies behavior and logic to our template.
+**Model** –– What the user sees after the page is fully rendered
+**Module** –– Child on Angular (usually it is the App in an Angular point of view)
 **Components** –– A combination of template + controller with an isolated scope (= no prototypal inheritance and no risk of our component affecting other parts of the application or vice versa) ([Docs](https://docs.angularjs.org/guide/component))
 **DI / dependency injection** –– https://github.com/angular/angular.js/wiki/Understanding-Dependency-Injection
 
-### misc
+## misc
 
 **Price**
 
@@ -89,7 +89,7 @@ pubdate: new Date("2014", "03", "08");
 <p class="date">{{ product.pubdate | date | uppercase }}</p>
 ```
 
-## Loop
+# Loop
 
 ```javascript
 $scope.products = [
@@ -118,7 +118,7 @@ $scope.products = [
 </div>
 ```
 
-## Html
+# Html
 
 ```html
 <!-- loops trough every product in products -->
@@ -131,7 +131,7 @@ $scope.products = [
 <p ng-click="plusOne($index)">{{ product.likes }}</p>
 ```
 
-## Directives
+# Directives
 
 in js/directives/appInfo.js
 
@@ -184,7 +184,7 @@ in index.html
 <app-info info="shutterbugg"></app-info>
 ```
 
-## Services
+# Services
 
 **js > services > forecast.js**
 
@@ -234,7 +234,7 @@ app.controller("MainController", [
 </div>
 ```
 
-## Routing
+# Routing
 
 **app.config.js**
 
@@ -384,7 +384,7 @@ app.factory("photos", [
 <div ng-view></div>
 ```
 
-## Filters
+# Filters
 
 ```javascript
 detail.upvotes | number; // 1,266

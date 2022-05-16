@@ -2,7 +2,7 @@
 
 # Kubernetes Cheatsheet
 
-## Table of Contents
+# Table of Contents
 
 - [Overview](#overview)
   - …
@@ -28,11 +28,11 @@
   - [Use local docker image](#use-local-docker-image)
   - [Docker Logging](#docker-logging)
 
-## Overview
+# Overview
 
 - Kubernetes is an orchestrator for microservice apps.
 
-### Pods
+## Pods
 
 - Pod run Containers (that share the pod environment)
 - Pods usually have only one container, they can have sidecars
@@ -41,32 +41,32 @@
 - Every time a new pod is spin up it gets a new ip, that is why pod ips are not reliable
 - That is why services are useful.
 
-### Replication Controller / Replica Sets
+## Replication Controller / Replica Sets
 
 - Are constructs designed to make sure the required number of pods is always running
 - Kind of replaced by deployments
 - Replica Sets is how they are called inside deployments (with subtle no needed to know diffs)
 
-### Services
+## Services
 
 - Is a simple object defined by a manifest
 - Provides a stable IP and DNS for pods sitting behind it
 - Loadbalances requests
 - Pods belong to services using labels (for example Prod+BE+1.3, then to update just change label to 1.4, so a rollback and forward is just a matter of changing labels)
 
-### Deployment
+## Deployment
 
 - Is defined in yaml as desired state
 - Add features to replication controllers/sets and takes care of it
 - Simple rolling updates and rollbacks (blue-green / canary)
 
-## Minikube
+# Minikube
 
 - Play around with kubernetes locally (single host kubernetes cluster)
 
-### Install
+## Install
 
-#### OSX
+### OSX
 
 https://minikube.sigs.k8s.io/docs/getting-started/macos/
 
@@ -82,15 +82,15 @@ brew install docker-machine-driver-xhyve
 # follow instruction commands
 ```
 
-#### Windows
+### Windows
 
 https://minikube.sigs.k8s.io/docs/getting-started/windows/
 
-#### Linux
+### Linux
 
 https://minikube.sigs.k8s.io/docs/getting-started/linux/
 
-### Basics
+## Basics
 
 ```bash
 minikube start --vm-driver=<driver> --kubernetes-version=<version>
@@ -108,9 +108,9 @@ minikube dashboard
 # Opens a dashboard GUI for minikube
 ```
 
-## Kubeadm
+# Kubeadm
 
-### Startup – Multinodes
+## Startup – Multinodes
 
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
@@ -132,7 +132,7 @@ kubectl apply --filename https://git.io/weave-kube-1.6
 
 Now join other nodes (servers) with the join token you received from `kubeadm init`.
 
-### Startup – Singlenode
+## Startup – Singlenode
 
 See: https://medium.com/@vivek_syngh/setup-a-single-node-kubernetes-cluster-on-ubuntu-16-04-6412373d837a
 
@@ -153,9 +153,9 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
-## Kubectl
+# Kubectl
 
-### Basics
+## Basics
 
 ```bash
 kubectl config current-context
@@ -164,7 +164,7 @@ kubectl cluster-info
 # Information about your cluster. For example the IP
 ```
 
-### Nodes
+## Nodes
 
 ```
 kubectl get nodes
@@ -172,7 +172,7 @@ kubectl get nodes
 
 Displays current running nodes
 
-### Pods
+## Pods
 
 ```bash
 kubectl get pods
@@ -186,7 +186,7 @@ kubectl describe pods
 # Displays more information on the pods
 ```
 
-### Replication Controllers
+## Replication Controllers
 
 ```bash
 kubectl get rc
@@ -198,11 +198,11 @@ kubectl describe rc
 # Displays more information on the rcs
 ```
 
-### logs
+## logs
 
 https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/#docker-logs
 
-## POD
+# POD
 
 - Smallest unit in Kubernetes
 - Contains 1 or more containers
@@ -210,7 +210,7 @@ https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/#docker-logs
 - POD is either running or down, never half running
 - Declared in a manifest file
 
-### Example
+## Example
 
 *Note: usually you never work directly on a pod*
 
@@ -247,9 +247,9 @@ kubectl delete pods <name>
 # example: kubectl delete pods hello-pod
 ```
 
-## Replication Controller
+# Replication Controller
 
-### Example
+## Example
 
 ```yml
 apiVersion: v1
@@ -278,7 +278,7 @@ kubectl create -f <path>
 # example: kubectl create -f rc.yml
 ```
 
-### Update
+## Update
 
 - Just edit the yml file
 
@@ -286,16 +286,16 @@ kubectl create -f <path>
 kubectl apply -f <path>
 ```
 
-## Services
+# Services
 
 - Sits in front of pods
 - Exposes an IP that can be called to reach the PODs
 - It will loadbalance between PODs automatically
 - Services matches PODs via labels
 
-### Example
+## Example
 
-#### Iterative
+### Iterative
 
 ```bash
 kubectl expose rc <rc-name> --name=<service-name> --target-port=<port> --type=<type>
@@ -304,7 +304,7 @@ kubectl describe svc <service-name>
 kubectl delete svc <service-name>
 ```
 
-#### Declatative
+### Declatative
 
 ```yml
 apiVersion: v1
@@ -336,7 +336,7 @@ kubectl create -f <path>
 # kubectl delete svc hello-svc
 ```
 
-### Updates / Deployments
+## Updates / Deployments
 
 - Usually you give the pods a version label. E.g. (app=foo;zone=prod;ver=1.0.0)
 - The service matches everything but the version label. E.g. (app=foo;zone=prod)
@@ -346,13 +346,13 @@ kubectl create -f <path>
 - The old pods are still there. To rollback, you just revert the label of the service to the old version  E.g. (app=foo;zone=prod;ver=1.0.0) and it will only target the old app. No downtime.
 This is basically called blue/green deployment
 
-## Deployments
+# Deployments
 
 - All about rolling updates and simple rollbacks
 - Deployments wrap around replication controllers (in the world of deployment called replica set)
 - Deployments manage Replica Sets, Replica Sets manage Pods
 
-### Example
+## Example
 
 ```yml
 apiVersion: apps/v1
@@ -393,7 +393,7 @@ kubectl create -f <path>
 kubectl describe deploy hello-deploy
 ```
 
-### Updates
+## Updates
 
 - Edit the yml file.
 - `kubectl apply -f <file> --record` will apply the changes
@@ -402,16 +402,16 @@ kubectl describe deploy hello-deploy
 - `kubectl rollout history deployment <name-of-deployment>` to see the versions and why it happened
 - `kubectl get rs` you’ll see that you have 2 replica sets, 1 with 0 pods and another with the new pods
 
-### Rollbacks
+## Rollbacks
 
 - `kubectl rollout undo deployment <name-of-deployment> --to-revision=<number>` (you can see revisions via `kubectl rollout history deployment <name-of-deployment>`)
 - does the same as for the update but in reverse to match the desired state of the specified revision number.
 
-## Secrets
+# Secrets
 
 https://kubernetes.io/docs/concepts/configuration/secret/
 
-### Example
+## Example
 
 ```yml
 apiVersion: v1
@@ -444,9 +444,9 @@ And then retrieved with:
 kubectl get secret <name> -o yaml
 ```
 
-## Useful
+# Useful
 
-### Image from private registry
+## Image from private registry
 
 https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
@@ -490,12 +490,12 @@ spec:
 ```
 
 
-## Troubleshooting
+# Troubleshooting
 
-### Use local docker image
+## Use local docker image
 
 Minikube runs in a VM hence it will not see the images you've built locally on a host machine, but... as stated in https://github.com/kubernetes/minikube/blob/master/docs/reusing_the_docker_daemon.md you can use `eval $(minikube docker-env)` to actually utilise docker daemon running on minikube, and henceforth build your image on the minikubes docker and thus expect it to be available to the minikubes k8s engine without pulling from external registry
 
-### Docker Logging
+## Docker Logging
 
 https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/#docker-logs

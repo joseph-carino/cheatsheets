@@ -4,28 +4,28 @@ Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
 # Ruby on Rails Cheatsheet<!-- omit in toc -->
 
 - [Basics](#basics)
-    - [request/response cycle](#requestresponse-cycle)
-    - [1. Generate a new Rails app](#1-generate-a-new-rails-app)
-    - [2. Generate a controller and add an action](#2-generate-a-controller-and-add-an-action)
-    - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action)
-    - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css)
+  - [request/response cycle](#requestresponse-cycle)
+  - [1. Generate a new Rails app](#1-generate-a-new-rails-app)
+  - [2. Generate a controller and add an action](#2-generate-a-controller-and-add-an-action)
+  - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action)
+  - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css)
 - [Connect a Database](#connect-a-database)
-    - [Example: messaging system](#example-messaging-system)
-    - [1. Generate a new Model](#1-generate-a-new-model)
-    - [2. Generate a controller and add actions](#2-generate-a-controller-and-add-actions)
-    - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action-1)
-    - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css-1)
+  - [Example: messaging system](#example-messaging-system)
+  - [1. Generate a new Model](#1-generate-a-new-model)
+  - [2. Generate a controller and add actions](#2-generate-a-controller-and-add-actions)
+  - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action-1)
+  - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css-1)
 - [Rake](#rake)
 - [Troubleshoots](#troubleshoots)
 
-## Basics
+# Basics
 
-#### request/response cycle
+## request/response cycle
 
 controller > route > view
 learn request/response cycle: https://www.codecademy.com/articles/request-response-cycle-forms
 
-#### 1. Generate a new Rails app
+## 1. Generate a new Rails app
 
 ```bash
 $ rails new MySite
@@ -36,7 +36,7 @@ $ rails server
 > http://localhost:8000 # or similar Number up and running!
 ```
 
-#### 2. Generate a controller and add an action
+## 2. Generate a controller and add an action
 
 ```
 $ rails generate controller Pages
@@ -55,7 +55,7 @@ class PagesController < ApplicationController
 end
 ```
 
-#### 3. Create a route that maps a URL to the controller action
+## 3. Create a route that maps a URL to the controller action
 
 Open: config/routes.rb
 
@@ -67,7 +67,7 @@ Rails.application.routes.draw do
 end
 ```
 
-#### 4. Create a view with HTML and CSS
+## 4. Create a view with HTML and CSS
 
 Open: app/views/pages/home.html.erb
 
@@ -81,11 +81,11 @@ Open: app/views/pages/home.html.erb
 </div>
 ```
 
-## Connect a Database
+# Connect a Database
 
-#### Example: messaging system
+## Example: messaging system
 
-#### 1. [Generate a new Model](https://guides.rubyonrails.org/active_record_migrations.html#model-generators)
+## 1. [Generate a new Model](https://guides.rubyonrails.org/active_record_migrations.html#model-generators)
 
 ```
 $ rails generate model Message
@@ -132,7 +132,7 @@ seeds the database with sample data from db/seeds.rb
 
 Alernatively, manually write the ActiveRecord class and create a [standalone migration](https://guides.rubyonrails.org/active_record_migrations.html#creating-a-standalone-migration)
 
-#### 2. Generate a controller and add actions
+## 2. Generate a controller and add actions
 
 ```
 $ rails generate controller Messages
@@ -174,7 +174,7 @@ class MessagesController < ApplicationController
 end
 ```
 
-#### 3. Create a route that maps a URL to the controller action
+## 3. Create a route that maps a URL to the controller action
 
 Open: config/routes.rb
 
@@ -188,7 +188,7 @@ Rails.application.routes.draw do
 end
 ```
 
-#### 4. Create a view with HTML and CSS
+## 4. Create a view with HTML and CSS
 
 Open: app/views/messages/index.html.erb
 
@@ -224,7 +224,7 @@ Open: app/views/messages/new.html.erb
 </div>
 ```
 
-## Rake
+# Rake
 
 ```bash
 rake db:create                          # Creates the database from DATABASE_URL or config/database.yml for the current RAILS_ENV (use db:create:all to create all databa...
@@ -240,7 +240,7 @@ rake db:schema:load                     # Load a schema.rb file into the databas
 rake db:seed                            # Load the seed data from db/seeds.rb
 ```
 
-## Troubleshoots
+# Troubleshoots
 
 1. When seeing only a blank page after running rails server:
    http://stackoverflow.com/questions/25951969/rails-4-2-and-vagrant-get-a-blank-page-and-nothing-in-the-logs

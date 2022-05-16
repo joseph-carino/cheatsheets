@@ -2,7 +2,7 @@
 
 # Unity Mirror CheatSheet
 
-## Table of Contents
+# Table of Contents
 
 - [NetworkManager](#networkmanager)
 - [NetworkBehaviour](#networkbehaviour)
@@ -13,7 +13,7 @@
 - [Spawning](#spawning)
 - [Useful](#useful)
 
-## NetworkManager
+# NetworkManager
 Example:
 ```c#
 public class MyNetworkManager : NetworkManager
@@ -34,7 +34,7 @@ public class MyNetworkManager : NetworkManager
 }
 ```
 
-## NetworkBehaviour
+# NetworkBehaviour
 Example:
 ```c#
 public class MyNetworkPlayer : NetworkBehaviour
@@ -43,7 +43,7 @@ public class MyNetworkPlayer : NetworkBehaviour
     {
         base.OnStartAuthority();
     }
-    
+
     [ClientCallback] // makes sure that it's not run on the server
     private void Update()
     {
@@ -52,7 +52,7 @@ public class MyNetworkPlayer : NetworkBehaviour
 }
 ```
 
-## SyncVars
+# SyncVars
 
 Example:
 ```c#
@@ -82,7 +82,7 @@ With hooks
     }
 ```
 
-## Actions
+# Actions
 
 Commands (clients calling a method on the server):
 ```c#
@@ -91,13 +91,13 @@ Commands (clients calling a method on the server):
     {
         SetDisplayName(newDisplayName);
     }
-    
+
     [ContextMenu("SetMyName")] // this is not nescessary, it's to make the method available in the unity editor
     private void SetMyName()
     {
         CmdSetDisplayName("My New Name"); // this is executed on the client, it will tell the server to execute the command method on the server
     }
-    
+
 ```
 
 CleintRpc (server calling a method on all clients):
@@ -132,7 +132,7 @@ private void TargetRpcLogName(string name) // this method will be called on a sp
 }
 ```
 
-## Server Authority
+# Server Authority
 
 - SyncVars have authority by default, only the server can change them and have them synced
 - Spawned player also has ownership authority by default. When spawning other objects it's important to tell Mirror who owns what.
@@ -147,12 +147,12 @@ private void TargetRpcLogName(string name) // this method will be called on a sp
     }
 ```
 
-## Network Transform
+# Network Transform
 
 - Use a component called `NetworkTransform` if you want to sync the transform attributes of that object across all clients.
 - It will automatically transpolate smoothly between the positions.
 
-## Spawning
+# Spawning
 
 ```c#
 // IPointerClickHandler is an interface. You can use it to have something happening when the user clicks the object it is attached to
@@ -189,7 +189,7 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
 }
 ```
 
-## Useful
+# Useful
 
 - You can create sections in a class by using `#region RegionName` and `#endregion`
 - You can have a method being call-able from the unity editor by adding the `[ContextMenu("Name")]` decorator

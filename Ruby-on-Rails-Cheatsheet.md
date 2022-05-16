@@ -10,7 +10,7 @@ Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
     - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action)
     - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css)
 - [Connect a Database](#connect-a-database)
-    - [Example: messaging system:](#example-messaging-system)
+    - [Example: messaging system](#example-messaging-system)
     - [1. Generate a new Model](#1-generate-a-new-model)
     - [2. Generate a controller and add actions](#2-generate-a-controller-and-add-actions)
     - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action-1)
@@ -22,7 +22,7 @@ Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
 
 #### request/response cycle
 
-controller > route > view  
+controller > route > view
 learn request/response cycle: https://www.codecademy.com/articles/request-response-cycle-forms
 
 #### 1. Generate a new Rails app
@@ -83,15 +83,15 @@ Open: app/views/pages/home.html.erb
 
 ## Connect a Database
 
-#### Example: messaging system:
+#### Example: messaging system
 
-#### 1. Generate a new Model
+#### 1. [Generate a new Model](https://guides.rubyonrails.org/active_record_migrations.html#model-generators)
 
 ```
 $ rails generate model Message
 ```
 
-create model named Message. With two files: model file app/models/message.rb. Represents a table in database. Migration file db/migrate/. Way to update database.  
+create model named Message. With two files: model file app/models/message.rb. Represents a table in database. Migration file db/migrate/. Way to update database.
 Open: db/migrate/*.rb –– *The name of the migration file starts with the timestamp of when it was created
 
 ```Ruby
@@ -107,7 +107,7 @@ end
 
 1. The change method tells Rails what change to make to the database. Here create_table method create a new table in database for storing messages.
 2. t.text :content. Create text column called content in the messages tables.
-3. t.timestamps is a Rails command that creates two more columns in the messages table called created_at and updated_at. These columns are automatically set when a message is created and updated.  
+3. t.timestamps is a Rails command that creates two more columns in the messages table called created_at and updated_at. These columns are automatically set when a message is created and updated.
    Open: db/seeds.rb
 
 ```Ruby
@@ -115,7 +115,7 @@ m1 = Message.create(content: "We're at the beach so you should meet us here! I m
 m2 = Message.create(content: "Let's meet there!")
 ```
 
-Just to have dummy messages to load with db:seed  
+Just to have dummy messages to load with db:seed
 in Terminal run
 
 ```
@@ -125,8 +125,12 @@ $ rake db:migrate
 $ rake db:seed
 ```
 
-updates the database with the new messages data model.  
+updates the database with the new messages data model.
 seeds the database with sample data from db/seeds.rb
+
+---
+
+Alernatively, manually write the ActiveRecord class and create a [standalone migration](https://guides.rubyonrails.org/active_record_migrations.html#creating-a-standalone-migration)
 
 #### 2. Generate a controller and add actions
 
@@ -238,7 +242,7 @@ rake db:seed                            # Load the seed data from db/seeds.rb
 
 ## Troubleshoots
 
-1. When seeing only a blank page after running rails server:  
+1. When seeing only a blank page after running rails server:
    http://stackoverflow.com/questions/25951969/rails-4-2-and-vagrant-get-a-blank-page-and-nothing-in-the-logs
-2. Follow instructions to use postgres:  
+2. Follow instructions to use postgres:
    https://www.digitalocean.com/community/tutorials/how-to-setup-ruby-on-rails-with-postgres

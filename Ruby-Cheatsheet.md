@@ -70,7 +70,8 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
   1.+(2)
   # Which is the same as this:
   1.send "+", 2
-```
+  ```
+- `PORO` == POJO
 
 ## Vars, Contants, Arrays, Hashes & Symbols
 
@@ -334,7 +335,9 @@ Diff between procs and lambdas:
 - `condition ? "true" : "false"`: ternary
 - `1..9`: inclusive range (1..9)
 - `1...9`: exclusive range (1..8)
-- `defined? x`: true if x is (varialbe) initialized or (method) defined
+- `defined? x`: true if x is (variable) initialized or (method) defined
+- `.`: "message" operator -> reference class variables/methods
+- `::`: "scope" operator -> reference class variables/methods and constants/namespaced things
 
 ## Commenting
 

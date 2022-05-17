@@ -1,41 +1,47 @@
 [back to overview](/../..)
 
-# JavaScript Cheatsheet
+# JavaScript Cheatsheet<!-- omit in toc -->
 
-# Table of Contents
-[Basics](#basics)
-[Arrays & Objects](#arrays--objects)
-[Functions](#functions)
-[Recursive Functions](#recursive-functions)
-[Methods](#methods)
-[Predefined Functions/Methods](#predefined-functionsmethods)
-- [On Strings](#on-strings)
-- [On Arrays](#on-arrays)
+- [Basics](#basics)
+- [Arrays & Objects:](#arrays--objects)
+- [Functions:](#functions)
+- [Recursive Functions](#recursive-functions)
+- [Methods:](#methods)
+- [Predefined Functions/Methods](#predefined-functionsmethods)
+  - [On Strings](#on-strings)
+  - [On Arrays](#on-arrays)
 - [Nodes](#nodes)
-[Custom Constructors / Classes](#custom-constructors--classes)
-[Math](#math)
-[Loops](#loops)
-[Logical Operators](#logical-operators)
-- [Conditional Operator](#conditional-operator)
-[User Input](#user-input)
-[JSON](#json)
-[ES6](#es6)
-[Tricks](#tricks)
-- [Get Password Combinations](#get-password-combinations)
+- [Custom Constructors / Classes:](#custom-constructors--classes)
+- [Math:](#math)
+- [Loops:](#loops)
+- [Logical Operators](#logical-operators)
+  - [Conditional Operator](#conditional-operator)
+- [User Input](#user-input)
+- [JSON](#json)
+- [ES6](#es6)
+  - [Destructuring](#destructuring)
+  - [Default Arguments](#default-arguments)
+  - [Template Strings](#template-strings)
+  - [Scoping](#scoping)
+  - [Classes](#classes)
+  - [Arrow Functions](#arrow-functions)
+  - [Modules](#modules)
+  - [Generator Functions](#generator-functions)
+- [Tricks](#tricks)
+  - [Get password combinations](#get-password-combinations)
 
 # Basics
-`&&`: and
-`||`: or
-`!`: not
-`1`: true
-`0`: false
-**increments:**
-i++ , i-- , i += x , i -= x
-**isNaN('berry');** –– true –– returns true when not a number
-**isNaN(42);**  –– false
-x**.length** –– Returns the length of a string or the amount of items in a variable
-**typeof** variable –– returns object, number, string
-**Z < a** –– true, uppercase < lowercase
+- `&&`: and
+- `||`: or
+- `!`: not
+- `1`: true
+- `0`: false
+- **increments:** i++ , i-- , i += x , i -= x
+- `isNaN('berry'); //true` –– true –– returns true when not a number `isNaN(42); //false`
+- `x**.length**` –– Returns the length of a string or the amount of items in a variable
+- `typeof variable` –– returns object, number, string
+- `Z < a` –– true, uppercase < lowercase
+- [Best practices](https://github.com/Shopify/web-foundations/tree/main/handbook/Best%20Practices/React)
 
 ```javascript
 // In browsers, the global scope object is stored in the window variable:

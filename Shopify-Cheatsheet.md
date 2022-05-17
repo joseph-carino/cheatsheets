@@ -4,6 +4,7 @@
 
 - [Terms](#terms)
 - [Spin](#spin)
+    - [Isospin](#isospin)
 - [Dev](#dev)
 - [Links](#links)
 
@@ -20,7 +21,14 @@
 - `spin list` - list all open instances
 - `spin destroy [<instancename>|--all]` - destroy open instance(s)
 
+## [Isospin](https://development.shopify.io/engineering/keytech/spin/isospin/isospin)
+The OS spin instances run.
+- `iso procs list` - returns application names
+- `iso procs [stop|start|restart] <applicationName>`
+
 # Dev
 
 # Links
 - [Ruby Style Guide](https://github.com/Shopify/ruby-style-guide)
+- [Polaris Design System](https://polaris.shopify.com/)
+- [React Best Practices](https://github.com/Shopify/web-foundations/tree/main/handbook/Best%20Practices/React)

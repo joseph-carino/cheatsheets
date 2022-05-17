@@ -27,6 +27,9 @@
   - [Arrow Functions](#arrow-functions)
   - [Modules](#modules)
   - [Generator Functions](#generator-functions)
+- [React](#react)
+  - [Terms](#terms)
+  - [Links](#links)
 - [Tricks](#tricks)
   - [Get password combinations](#get-password-combinations)
 
@@ -41,7 +44,6 @@
 - `x**.length**` –– Returns the length of a string or the amount of items in a variable
 - `typeof variable` –– returns object, number, string
 - `Z < a` –– true, uppercase < lowercase
-- [Best practices](https://github.com/Shopify/web-foundations/tree/main/handbook/Best%20Practices/React)
 
 ```javascript
 // In browsers, the global scope object is stored in the window variable:
@@ -532,6 +534,15 @@ async function() {
   console.log(friends);
 } // returns one promise that is denible
 ```
+
+# React
+
+## Terms
+- Elements - immutable descriptions of independent, reusable pieces a user interface can be built from
+- Components - encapsulate a React element tree
+
+## Links
+- [React Hooks](https://reactjs.org/docs/hooks-reference.html)
 
 # Tricks
 

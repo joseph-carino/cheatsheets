@@ -1,20 +1,29 @@
 [back to overview](/../..)
 
-# Git
+# Git<!-- omit in toc -->
 
-#### Table of Contents
-[Mostly used](#mostly-used)
-[Getting Help](#getting-help)
-[Setup](#setup)
-[Staging](#staging)
-[Commiting](#commiting)
-[Branching](#branching)
-[Teamwork](#teamwork)
-[Removing](#removing)
-[Ignoring](#ignoring)
-[Renaming](#renaming)
-[Stashing](#stashing)
-
+- [Mostly used](#mostly-used)
+- [Getting Help](#getting-help)
+    - [Within git](#within-git)
+    - [outside of git](#outside-of-git)
+- [Setup](#setup)
+    - [Global](#global)
+    - [Project](#project)
+    - [New](#new)
+    - [Existing](#existing)
+- [Staging](#staging)
+- [Commiting](#commiting)
+- [Branching](#branching)
+- [Teamwork](#teamwork)
+    - [Teamwork Workflow:](#teamwork-workflow)
+- [Removing](#removing)
+- [Ignoring](#ignoring)
+    - [Rules](#rules)
+- [Renaming](#renaming)
+- [Deploying a subfolder to GitHub Pages](#deploying-a-subfolder-to-github-pages)
+- [Stashing](#stashing)
+- [Patching](#patching)
+-
 # Mostly used
 ```javascript
 $ git init // to initialize
@@ -48,11 +57,11 @@ You stage the files, adding snapshots of them to your staging area.
 You do a commit, which takes the files as they are in the staging area and stores that snapshot permanently to your Git directory.
 
 # Getting Help
-### Within git
+## Within git
 git help &lt;verb&gt;
 git &lt;verb&gt; --help
 man git-&lt;verb&gt;
-### outside of git
+## outside of git
 in the #git or #github channel on the Freenode IRC server (irc.freenode.net)
 
 ```javascript
@@ -64,24 +73,24 @@ $ git diff --staged // compares staged with commited
 ```
 
 # Setup
-### Global
+## Global
 ```javascript
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 $ git config --list // to show all settings
 ```
-### Project
+## Project
 ```javascript
 $ git init // adds git
 ```
-### New
+## New
 ```javascript
 $ git add .
 $ git commit -m 'initial project version'
 $ git remote add origin URL
 $ git push -u origin master
 ```
-### Existing
+## Existing
 ```javascript
 $ git clone URL (directory name, optional)
 $ git clone --depth=16 URL // only take the last 16 commits (faster download)
@@ -133,7 +142,7 @@ $ git checkout branchname // Switch to a branch
 Configure a remote for a fork: https://help.github.com/articles/configuring-a-remote-for-a-fork/
 Sync your fork: https://help.github.com/articles/syncing-a-fork/
 
-### Teamwork Workflow:
+## Teamwork Workflow:
 Fetch and merge changes from the remote
 Create a branch to work on a new project feature
 Develop the feature on your branch and commit your work
@@ -159,7 +168,7 @@ Create a .gitignore file and write in that file:
 &ast;.[oa] –– ignore any files ending in “.o” or “.a”
 &ast;~ –– ignore all files that end with a tilde (~) which is used by many text editors such as Emacs to mark temporary files
 
-### Rules
+## Rules
 Blank lines or lines starting with # are ignored.
 Standard glob patterns work.
 You can start patterns with a forward slash / to avoid recursivity.
@@ -210,4 +219,10 @@ $ git stash pop
 to remove a stash completely:
 ```javascript
 $ git stash drop
+```
+
+# Patching
+```
+$ git diff --cached > patch.patch
+$ git apply patch.patch
 ```

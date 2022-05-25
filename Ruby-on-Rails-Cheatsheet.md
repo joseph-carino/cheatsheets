@@ -16,6 +16,7 @@ Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
   - [2. Generate a controller and add actions](#2-generate-a-controller-and-add-actions)
   - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action-1)
   - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css-1)
+- [Extras](#extras)
 - [Troubleshoots](#troubleshoots)
 
 # Basics
@@ -232,6 +233,10 @@ Open: app/views/messages/new.html.erb
   </div>
 </div>
 ```
+
+# Extras
+
+- [Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
 
 # Troubleshoots
 

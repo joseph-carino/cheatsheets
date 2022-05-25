@@ -139,15 +139,35 @@ my_hash = { key: "value", key2: "value" } # is equal to { :key => "value", :key2
 **Methods**
 
 ```Ruby
-def greeting(hello, *names) # *names is a split argument, takes several parameters passed in an array
+# Argument types are used in this order: required -> optional -> variable -> keyword
+def testing(a, b = 1, *c, d: 1, **x) # required, optional, variable, keyword optional, double splat
+  p a,b,c,d,x
+end
+testing('a', 'b', 'c', 'd', 'e', d: 2, x: 1)
+=begin
+"a"
+"b"
+["c", "d", "e"]
+2
+{:x=>1}
+=> ["a", "b", ["c", "d", "e"], 2, {:x=>1}]
+=end
+
+def greet(hello, name, exclaim = false) # 2 args in order plus default value
+  return "#{hello}, #{name}#{exclaim ? '!' : ''}"
+end
+greet("Hi", "Joe") # => "Hi, Joe"
+
+def greet2(hello:, name:, exclaim: false) # 2 args by name plus default value
+  return "#{hello}, #{name}#{exclaim ? '!' : ''}"
+end
+greet2(hello:"Hi", name:"Joe") # => "Hi, Joe"
+
+def greet3(hello, *names) # *names is a variable argument; rest of arguments combined into an array
   return "#{hello}, #{names}"
 end
+greet3("Hi", "Joe", "Justin") # => "Hi, [\"Joe\", \"Justin\"]"
 
-start = greeting("Hi", "Justin", "Maria", "Herbert") # call a method by name
-
-def name(variable=default)
-  ## The last line in here gets returned by default
-end
 ```
 
 # Classes

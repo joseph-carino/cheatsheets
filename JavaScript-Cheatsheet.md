@@ -543,8 +543,10 @@ async function() {
 
 ## Links
 - [React Hooks](https://reactjs.org/docs/hooks-reference.html)
+- [React Routes](https://v5.reactrouter.com/web/api/Route)
 
 # Tricks
+- `yarn sewing-kit refresh graphql` - refresh graphql type definitions
 
 ## Get password combinations
 

@@ -30,6 +30,7 @@
 - [React](#react)
   - [Terms](#terms)
   - [Links](#links)
+  - [Testing](#testing)
 - [Tricks](#tricks)
   - [Get password combinations](#get-password-combinations)
 
@@ -544,6 +545,9 @@ async function() {
 ## Links
 - [React Hooks](https://reactjs.org/docs/hooks-reference.html)
 - [React Routes](https://v5.reactrouter.com/web/api/Route)
+
+## Testing
+- npm test
 
 # Tricks
 - `yarn sewing-kit refresh graphql` - refresh graphql type definitions

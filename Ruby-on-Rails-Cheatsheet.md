@@ -4,7 +4,9 @@ Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
 # Ruby on Rails Cheatsheet<!-- omit in toc -->
 
 - [Basics](#basics)
-  - [request/response cycle](#requestresponse-cycle)
+  - [Terms](#terms)
+  - [Request/Response Cycle](#requestresponse-cycle)
+- [Rails App Elements](#rails-app-elements)
   - [1. Generate a new Rails app](#1-generate-a-new-rails-app)
   - [2. Generate a controller and add an action](#2-generate-a-controller-and-add-an-action)
   - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action)
@@ -16,16 +18,23 @@ Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
   - [2. Generate a controller and add actions](#2-generate-a-controller-and-add-actions)
   - [3. Create a route that maps a URL to the controller action](#3-create-a-route-that-maps-a-url-to-the-controller-action-1)
   - [4. Create a view with HTML and CSS](#4-create-a-view-with-html-and-css-1)
+- [Logging, Metrics, Alerting, Observability](#logging-metrics-alerting-observability)
+- [Sagas](#sagas)
+- [Panama](#panama)
+  - [Usage Example](#usage-example)
 - [Extras](#extras)
 - [Troubleshoots](#troubleshoots)
 
 # Basics
 
-## request/response cycle
+## Terms
+- `engine`: mini applications - `Rails::Application` inherits from `Rails:Engine`. Generated with `rails plugin new <name> --[full|mountable]`. Engine is a full plugin. [See more](https://guides.rubyonrails.org/engines.html)
 
+## Request/Response Cycle
 controller > route > view
 learn request/response cycle: https://www.codecademy.com/articles/request-response-cycle-forms
 
+# Rails App Elements
 ## 1. Generate a new Rails app
 
 ```bash
@@ -34,7 +43,7 @@ $ rails new MySite
 $ bundle install
 $ rails server
 
-> http://localhost:8000 # or similar Number up and running!
+> http://localhost:8000 # up and running!
 ```
 
 ## 2. Generate a controller and add an action
@@ -52,7 +61,6 @@ class PagesController < ApplicationController
 
   def home # add the home action/method to the pages controller
   end
-
 end
 ```
 
@@ -112,18 +120,18 @@ end
 2. `t.text :content` - create text column called content in the messages tables.
 3. `t.timestamps` - a Rails command that creates columns created_at and updated_at. These columns are automatically set when a message is created and updated.
 
-```
-$ rails db:create # create db
-$ rails db:drop # drop db
-$ rails db:schema:load # run schema.rb
-$ rails db:schema:dump # dump db schema to schema.rb
-$ rails db:version # print schema version
-$ rails db:migrate # run migrations
-$ rails db:rollback # [rollback previous migration](https://edgeguides.rubyonrails.org/active_record_migrations.html#rolling-back)
-$ rails db:seed # seed by running seeds.rb
-$ rails db:setup # db:create, db:schema:load, db:seed
-$ rails db:reset # db:drop, db:setup
-$ rails db:migrate:reset # db:drop, db:create, db:migrate
+```bash
+$ rails db:create         # create db
+$ rails db:drop           # drop db
+$ rails db:schema:load    # run schema.rb
+$ rails db:schema:dump    # dump db schema to schema.rb
+$ rails db:version        # print schema version
+$ rails db:migrate        # run migrations
+$ rails db:rollback       # [rollback previous migration](https://edgeguides.rubyonrails.org/active_record_migrations.html#rolling-back)
+$ rails db:seed           # seed by running seeds.rb
+$ rails db:setup          # db:create, db:schema:load, db:seed
+$ rails db:reset          # db:drop, db:setup
+$ rails db:migrate:reset  # db:drop, db:create, db:migrate
 ```
 
 Seed data in seeds.rb:
@@ -190,6 +198,8 @@ Rails.application.routes.draw do
   post 'messages' => 'messages#create'
 
   resources :messages # maps conventional routes
+
+  mount Billing::Engine, at '/', as: 'billing' # 'billing' route redirected to Billing engine at '/' route
 end
 ```
 
@@ -234,9 +244,131 @@ Open: app/views/messages/new.html.erb
 </div>
 ```
 
+# Logging, Metrics, Alerting, Observability
+- Logging - Use [Splunk](https://logs.shopify.io/en-US/app/launcher/home)
+  - `Rails.logger.error("Error message")` - log to splunk
+- Logging for bugs - Use [Bugsnag](https://app.bugsnag.com/shopify/fbs/overview)
+  - `Bugsnag.notify('TurboGraft:script-error', scriptSrc);` - JS
+  - `rescue StandardError => e Bugsnag.notify(e)` - RB
+- Metrics - Use [DataDog](https://shopify.datadoghq.com)
+  - `StatsD.event("event-name")` - event metric
+  - `StatsD.gauge("metric-name", value)` - gauge, new values replace old values
+  - `StatsD.increment("metric-name", value)` - counting, new values added to existing. generally value is 1
+  - `StatsD.histogram("metric-name", value)` - histogram
+  - `StatsD.measure("metric-name", value)` - timing measurement
+- Jobs - Use [Sidekiq](https://fbs.shopifycloud.com/sidekiq)
+- DB - Use [VividCortex](https://go.vividcortex.com/75c845789f)
+
+# [Sagas](https://github.com/Shopify/fbs/blob/main/components/platform/SAGAS.md)
+- Series of steps/transactions executed in sequence
+- Replace "Workflows"
+- see `components/<component>/app/public/<component>/orchestrators/`
+- Orchestrator (inherits Platform::Sagas::Orchestrator) contains `event`s:
+    - starting a saga involves calling `dispatch!` on the Orchestrator, passing the matching event
+    - `event` contains a list of `step` actions (unit of business logic)
+        - see `components/<component>/app/services/<component>/<related-to-orchestrator>/saga_steps/`
+```Ruby
+MyComponent::MyOrchestrator.dispatch!(:my_event, inbound_shipment_id: 7, other_required_parameter: "some value") # run saga async
+result = orchestrator.run!(:my_event, inbound_shipment_id: 7, other_required_parameter: "some value", trace_id:"someId") # run saga sync for testing
+...
+module MyComponent
+  class MyOrchestrator < Platform::Sagas::Orchestrator
+    event
+      :my_event, # unique for this orchestrator
+      for_resource: InboundTransfer, # This event manipulates InboundTransfer objects
+      resource_id_key: :inbound_shipment_id, # Use inbound_shipment_id instead of inbound_transfer_id to locate resource
+      input_schema: { inbound_shipment_id: Integer, other_required_parameter: String } # All parameters listed here are required
+    do
+      step MyComponent::CommandProcessors::MyLegacyCommandClass # legacy workflow step
+      step MyComponent::MyStepCommand # saga step
+      step( # inline step
+        "inline_step_unique_name", # Step identifier, unique for the saga
+        transactional: true, # Execute the step as a transaction
+        input_schema: { some_input_param: Integer } # Inputs will be validated against this schema at runtime
+      ) do
+        perform_command do |input|
+          # Logic to be execute for this step
+          step_result(some: data) # use step_result to return step results, injected into input for this saga
+        end
+        on_failure_command do |input|
+          # Logic to be execute in case of step execution failure
+        end
+      end
+      branch :conditional_param do # :conditional_param should be in the input to this event
+        condition :success do
+          # This will run if input[:conditional_param] == :success
+          step "success_step_1" do ... end
+          ...
+        end
+        condition :failure do
+          ...
+        end
+        condition :other do
+          ...
+        end
+        condition ->(input){ input[:some_param].present? } do
+          # This will run if the above lambda evaluates to true
+          step "lambda_step_1" do ... end
+          ...
+        end
+      end
+      # Iterate over input[:ids] (do nothing if not found or not an Array)
+      for_each :ids do
+        # These steps will be executed for each element in input[:ids]
+        step "iter-step-1" do ... end
+        step "iter-step-2" do ... end
+        ...
+      end
+    end
+...
+module MyComponent
+  class MyStepCommand < Platform::Sagas::StepCommandRunner
+    transaction true # should this step be executed as a transaction?
+    input_schema { some_resource_id: Integer } # define here the step input schema for validation
+
+    def perform
+      # Override perform to define the step behavior
+      new_value = @input[:old_value] + 1
+
+      # cancel() will stop execution of the whole saga early
+      step_result(new_value: new_value) # use step_result to return step results
+    end
+
+    def on_failure
+      # Optionally override on_failure to provide logic in case of errors
+      new_value = @input[:old_value] - 1
+      step_result(new_value: new_value)
+    end
+  end
+end
+```
+
+# Panama
+Used for query of BigData storage pre-computed reports
+See [docs](https://panama.docs.shopify.io/) and [dashboard](https://panama.shopifycloud.com/) and [setup](https://vault.shopify.io/pages/5859-Panama-Setup)
+## [Usage Example](https://github.com/Shopify/shopify/blob/main/components/apps/app/services/shopify_fulfillment_network/eligibility_checker.rb)
+```Ruby
+# add gem "shopify_panama", "~> 1.2.21" to GEMFILE
+module PanamaInput
+  DATASET               = "sfn-qualifications"
+  QUALIFICATION_NAME    = "app_install"
+  QUALIFICATION_VERSION = "2.1"
+end
+def check_eligibility_of_merchant(shop_id)
+  panama_client = Shopify::Config.panama_client
+  scope = { "shopify_shop_id" => shop_id.to_s,
+            "qualification_name" => PanamaInput::QUALIFICATION_NAME,
+            "qualification_version" => PanamaInput::QUALIFICATION_VERSION, }
+  raw_response = panama_client.find_record(scope, PanamaInput::DATASET)&.payload
+end
+```
+
 # Extras
 
 - [Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
+- [Rails Initialization](https://guides.rubyonrails.org/initialization.html) - `bin/rails server`
+- Components may define a `table_name_prefix` to prefix their ActiveRecord's database table names
+- `rails console`: jump into rails interactive console
 
 # Troubleshoots
 

@@ -90,3 +90,9 @@ or, with rebase:
 $ git rebase -i [HEAD~X]|[commit-hash]  // rebase X commits, or commit-hash of commit before rebased
 $ [change all pick to squash/s]
 ```
+
+# Compare
+```javascript
+$ git diff b1..b2           // compare changes from b1 to b2
+$ git log b1..b2            // compare commits from b1 to b2
+```

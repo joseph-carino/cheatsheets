@@ -253,6 +253,10 @@ enum.reduce(symbol)                 # for each e in enum, memo.symbol(e) => memo
 enum.inject {|memo, e| memo + e}    # for each e in enum, run block producing memo
 (5..10).inject{ |sum, n| sum + n }  #=> 45 - note reduce == inject
 (5..10).inject(1) { |p, n| p * n }  #=> 151200 - initial value used
+H = {"Key1" => 1, "Key2" => 2}
+H.values.reduce(:+)                 #=> 3 - below are also 3, but note will return 0 if H is nil
+H.values.reduce(0) { |sum,x| sum + x }
+H.reduce(0) { |sum,(key,val)| sum + val }
 
 object.freeze                       # now immutable, modifications will throw runtime error
 
@@ -364,14 +368,14 @@ Diff between procs and lambdas:
 def testing(a, b = 1, *c, d: 1, **x)      # required, optional, variable, keyword optional, double splat
   p a,b,c,d,x
 end
-testing('a', 'b', 'c', 'd', 'e', d: 2, x: 1)
+testing('a', 'b', 'c', 'd', 'e', d: 2, x1: 1, x2: 2)
 =begin
 "a"
 "b"
 ["c", "d", "e"]
 2
-{:x=>1}
-=> ["a", "b", ["c", "d", "e"], 2, {:x=>1}]
+{:x1=>1, :x2=>2}
+=> ["a", "b", ["c", "d", "e"], 2, {:x1=>1, :x2=>2}]
 =end
 
 def greet(hello, name, exclaim = false)   # 2 args in order plus default value
@@ -390,6 +394,11 @@ end
 greet3("Hi", "Joe", "Justin")             # => "Hi, [\"Joe\", \"Justin\"]"
 
 object.method(:method_name)               #=> like object.method_name, reflection
+
+def greet4(opener, **exclaims)            #=> create hash of named arguments that don't match
+  exclaims.reduce(opener) { |all, (key, val)| all + " #{key} says #{val}!"}
+end
+greet4(opener: "Greetings!", joe: "Hi", john: "Hello")          #=> "Greetings! joe says Hi! john says Hello!"
 ```
 
 # Classes

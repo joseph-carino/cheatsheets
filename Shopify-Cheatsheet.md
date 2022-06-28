@@ -144,6 +144,7 @@ The OS spin instances run.
 - if "error: gpg failed to sign the data" then killall gpg-agent; gpgconf --launch gpg-agent; spin shell
 
 ## Dev
+- `dev` - when personal access token expires for local push
 - `dev open pr` - open a pr in browser for branch, use from spin
 - `dev annotate` - update annotations in models
 - `dev g` - update graphql schema

@@ -16,8 +16,13 @@
     - [GPG Signing](#gpg-signing)
   - [Dev](#dev)
   - [lhm](#lhm)
+  - [spy](#spy)
+- [Projects](#projects)
+  - [Brochure2](#brochure2)
 - [Data Analysis](#data-analysis)
   - [Mode](#mode)
+  - [Reportify](#reportify)
+  - [Panama](#panama)
 - [Links](#links)
 - [Random Tips](#random-tips)
 
@@ -60,6 +65,9 @@
 - `BFCM` - Black Friday/Cyber Monday - huge load
 - `spike` - time box investigation
 - `PXW` - Past X Weeks
+- `Flexport` - upstream shipping (manu to warehouse)
+- [`Apdex`](https://vault.shopify.io/page/Fast-is-a-feature~dhbde26.md#how-we-talk-about-and-measure-performance) - pick T-value; <T = satisfied, >T<4T = tolerating, >4T = frustrated; Apdex = (satisfied + (tolerating/2))/total
+  - In Splunk: `apdex(2)` Usage: `apdex(t-value, field)`, `apdexCustom(3)` Usage: `apdexCustom(t-value, field, f-value-multiplier)`
 
 ## SFN
 - [SFN Glossary Doc](https://docs.google.com/spreadsheets/d/1rXbSDt_MHpXhAVOcO3QO_LYJAsHK71Q_8pY8igqx-7c/edit#gid=0) OR [SFN Glossary Wiki](https://sfn.docs.shopify.io/Wiki/Glossary-&-Business-Logic)
@@ -91,6 +99,7 @@
 - `CTOR` - Click-To-Open Rate
 - `fulfillment complexity` - everything warehouse does with products from inbound to packout - aim to reduce
 - `business complexity` - everything related to getting order into 3PL (multi-channel, wholesale, ERP needs) - aim to increase
+- `dock to stock` - time in induction from truck reaching warehouse to stock ready to ship out
 
 # SFN Goals 2022
 [All Metrics](https://docs.google.com/spreadsheets/d/1z6hn3evKgFPXXQXa1slbhSqip5ANio9JmZU6LmJzOxg/edit#gid=1346961718)
@@ -111,9 +120,10 @@
 
 # Tools
 ## Spin
-[FAQ](https://development.shopify.io/engineering/keytech/spin/faq)
+[FAQ](https://vault.shopify.io/page/Spin-FAQ~dhba5f9.md)
 [Spin in SFN](https://sfn.docs.shopify.io/Spin/Using-Spin-to-develop-SFN)
-- `spin up <repo> [--no-snapshots]` - create instance of <repo> from snapshot (or direct from main with --no-snapshots)
+[Quick Ref](https://vault.shopify.io/page/Quick-start~dhbc78b.md)
+- `spin up <repo> [--no-snapshots] [--name NAME]` - create instance of <repo> from snapshot (or direct from main with --no-snapshots) with name NAME
 - `spin code` - open instance in vs code
 - `spin open` - run instance in browser
 - `spin shell` - connect to instance shell
@@ -129,33 +139,63 @@
     - on Sequel Ace login with host='shopify.spin_instance.joseph-carino.us.spin.dev', username=root, port=MYSQL_PORT
 - Use constellation: `fbs` = 1 onboard, `fbs:no_onboard` = empty, `fbs:part_onboard` = 1 onboard 1 installed
 
-### [Isospin](https://development.shopify.io/engineering/keytech/spin/isospin/isospin)
-The OS spin instances run.
+### Isospin
+The OS spin instances run. [Docs](https://development.shopify.io/engineering/keytech/spin/isospin/isospin)
 - `iso procs list` - returns application names
 - `iso procs [stop|start|restart] <applicationName>`
 
-### [Cartridges](https://development.shopify.io/engineering/keytech/spin/isospin/tools#Moving_data_between_your_instances)
+### Cartridges
+[Docs](https://development.shopify.io/engineering/keytech/spin/isospin/tools#Moving_data_between_your_instances)
 - `cartridge create <name>` create new cartridge at ~/.data/cartridges/<name>
 - `cartridge save <name>` save <name> to cloud
 - `cartridge list` list cartridges. to see inserted just `ls ~/.data/cartridges/`
 - `cartridge insert <name>` retrieve <name> from cloud to ~/.data/cartridges/<name>
 
-### [GPG Signing](https://development.shopify.io/engineering/keytech/spin/faq#How_do_I_use_GPG_signing_within_Spin_)
-- if "error: gpg failed to sign the data" then killall gpg-agent; gpgconf --launch gpg-agent; spin shell
+### GPG Signing
+[How to](https://development.shopify.io/engineering/keytech/spin/faq#How_do_I_use_GPG_signing_within_Spin_)
+- if "error: gpg failed to sign the data" then `killall gpg-agent; gpgconf --launch gpg-agent; spin shell`
 
 ## Dev
 - `dev` - when personal access token expires for local push
 - `dev open pr` - open a pr in browser for branch, use from spin
 - `dev annotate` - update annotations in models
 - `dev g` - update graphql schema
+- `dev deploy <stagingenvname>` - deploy to staging environment
 
-## [lhm](https://github.com/Shopify/lhm)
+## lhm
+[GIT](https://github.com/Shopify/lhm)
 - `rails generate lhm <Name>` - generate lhm
 - `VERSION=<version_num> rake lhm:run` - run lhm migration with specified version number
 
+## spy
+[How to Use](https://development.shopify.io/engineering/keytech/reference/spy)
+Either message a channel that includes @spy or msg @spy and skip the `spy` prefix
+[Docs](https://spy-v2.docs.shopify.io/)
+- [claim](https://spy-v2.docs.shopify.io/commands/claim.html) - claim staging environments
+  - `[spy] claim list <project>` - list staging environments
+  - `[spy] claim take <project> [<environment>]` - claim `<project>`, optionally specify exact `<environment>`
+  - `dev deploy <environment>` - deploy to environment
+  - view pending deployment at `https://shipit.shopify.io/shopify/<project>/<environment>`
+
+# Projects
+
+## Brochure2
+- [Docs](https://brochure2.docs.shopify.io/)
+- [Deployment to staging](https://brochure2.docs.shopify.io/operations/deployment#staging)
+
 # Data Analysis
+
 ## Mode
 - Re-request access to `mode-query` every 30 days from [here](https://clouddo.shopifycloud.com/permits) see also [vault](https://vault.shopify.io/pages/9235-Clouddo-for-Mode-access)
+
+## Reportify
+[Docs](https://data-handbook.shopify.io/data/platform/reportify/)
+[GIT](https://github.com/Shopify/reportify-query)
+- more real time than Panama
+- Use [ShopifyQL](https://github.com/Shopify/reportify-query/tree/master/shopifyql)
+
+## Panama
+[Docs](https://data-handbook.shopify.io/data/platform/panama/)
 
 # Links
 - [Ruby Style Guide](https://github.com/Shopify/ruby-style-guide)

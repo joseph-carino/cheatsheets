@@ -80,6 +80,17 @@ $ git rebase --onto trunk_branch ${commit_before_your_first_commit_on_feature_br
 ```
 May be useful to check out [git-chain](https://github.com/Shopify/git-chain)
 
+# Push --force
+[see here](https://stackoverflow.com/questions/65837109/when-should-i-use-git-push-force-if-includes)
+When pushing, use -f or --force to overwrite origin with your copy of branch. If this may cause issues, try:
+```javascript
+$ git push --force-with-lease [--force-if-includes] origin branch
+```
+Force push **branch**, but ONLY if remote/origin/**branch** has the same tip commit as local/origin/**branch**. If --force-if-includes, ONLY if remote/origin/**branch** has the same tip commit as the branch point of local/**branch** from local/origin/**branch**
+
+# Pull (from force push)
+git reset --hard origin/branch
+
 # Squash
 ```javascript
 $ git reset --soft HEAD~X   // reset local back, removing X commits, but leave changes in working directory

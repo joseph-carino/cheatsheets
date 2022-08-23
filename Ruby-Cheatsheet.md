@@ -175,7 +175,7 @@ Note: constant lookup starts with class containing the method called, NOT the cl
 
 ## Calculation
 - Normal: `+`, `-`, `*`, `/`, `%`, `**` (exponent)
-- The concatenation operator (<<) `"a" << "b"   #=> "ab"`
+- The shovel operator (<<) `"a" << "b"   #=> "ab"` - note this actually modifies the object
 
 ## Other
 - `condition ? "true" : "false"`: ternary
@@ -212,10 +212,11 @@ Hash(key: value)                                  #=> {:key => :value}
 
 h.default                                         #=> nil - return on key not found lookups
 h.default = 0                                     #
-Hash.new("val")                                   # default = "val"
+Hash.new("val")                                   # default if key does not exist = "val"
 h.default_proc                                    #=> nil - if set, used instead of default
 h.default_proc = proc { |hash, key| "#{key}" }    # key not found lookups call proc
 Hash.new{ |hash, key| "#{key}" }                  # default_proc set to block
+
 h[:nokey]                                         #=> "nokey" - note this doesn't add the key to hash
 h.include?(:nokey)                                #=> false
 
@@ -225,6 +226,10 @@ hash.select { |key, value| value > 3 }            # selects all keys in hash tha
 hash.filter { |key, value| value > 3 }            # alias to select
 hash.each_key { |k| print k, " " }                #=> key1 key2
 hash.each_value { |v| print v, " " }              #=> 1 2 3
+
+hash.merge(other_hash)                            # merge together, other_hash overwrites duplicates
+hash.reverse_merge(other_hash)                    # merge together, hash overwrites duplicates
+{**{k1: 1, k2: 2}, **{k3: 3, k4: 4} }             #=> {k1: 1, k2: 2, k3: 3, k4: 4} - ** merges/flattens hash
 ```
 
 ## Ranges

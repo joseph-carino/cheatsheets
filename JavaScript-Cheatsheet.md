@@ -31,6 +31,8 @@
   - [Terms](#terms)
   - [Links](#links)
   - [Testing](#testing)
+    - [Jest](#jest)
+- [Logging, Metrics, Alerting, Observability](#logging-metrics-alerting-observability)
 - [Tricks](#tricks)
   - [Get password combinations](#get-password-combinations)
 
@@ -548,6 +550,14 @@ async function() {
 
 ## Testing
 - npm test
+
+### Jest
+- JS Mocking Library - [see docs](https://jestjs.io/)
+-
+
+# Logging, Metrics, Alerting, Observability
+- Web uses '@web-utilities/stats-client' which uses the [statsd](https://github.com/Shopify/quilt/tree/main/packages/statsd) package, which uses the Rails StatsD implementation (see Rails sheet)
+- use `distribution` type - server-side histogram of events
 
 # Tricks
 - `yarn sewing-kit refresh graphql` - refresh graphql type definitions

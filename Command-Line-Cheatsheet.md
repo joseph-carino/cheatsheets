@@ -20,11 +20,15 @@
 
 # Showing & Navigating
 
-`ls`: lists all files (folders are called directories. files and directories are structured in a file system)
-`ls -a`: lists all files + hidden files (-a is called an option)
+`ls`: lists all files
+`ls -a`: lists all files + hidden files
 `ls -t`: orders by time last added
-`ls -l`: with long description (access-rights, n# of hard links, owner, group-name, size in bytes, date-last-modified, name)
-`ls -alt`: -a, -t & -l together
+`ls -l`: with long description
+
+aliases from oh-my-zsh:
+`l` = `lsa` = `ls -lah`
+`la` = `ls -lAh`
+`ll` = `ls -lh`
 
 `pwd`: print working directory path (the directory you’re currently in)
 `cd <directory-path>`: change directory

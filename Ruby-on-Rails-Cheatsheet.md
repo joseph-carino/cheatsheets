@@ -8,12 +8,6 @@ Looking for [Ruby](../master/Ruby-Cheatsheet.md)?
   - [Commands](#commands)
   - [Request/Response Cycle](#requestresponse-cycle)
   - [Database Commands](#database-commands)
-- [Logging, Metrics, Alerting, Observability](#logging-metrics-alerting-observability)
-  - [Logging](#logging)
-  - [Metrics](#metrics)
-  - [Jobs](#jobs)
-  - [DB](#db)
-- [Sagas](#sagas)
 - [Panama](#panama)
   - [Usage Example](#usage-example)
 - [Tutorial - To be moved](#tutorial---to-be-moved)
@@ -42,18 +36,19 @@ controller > route > view
 learn request/response cycle: https://www.codecademy.com/articles/request-response-cycle-forms
 
 ## Database Commands
-```bash
-$ rails db:create         # create db
-$ rails db:drop           # drop db
-$ rails db:schema:load    # run schema.rb
-$ rails db:schema:dump    # dump db schema to schema.rb
-$ rails db:version        # print schema version
-$ rails db:migrate        # run migrations
-$ rails db:rollback       # [rollback previous migration](https://edgeguides.rubyonrails.org/active_record_migrations.html#rolling-back)
-$ rails db:seed           # seed by running seeds.rb
-$ rails db:setup          # db:create, db:schema:load, db:seed
-$ rails db:reset          # db:drop, db:setup
-$ rails db:migrate:reset  # db:drop, db:create, db:migrate
+- `rails db:create` - create db
+- `rails db:drop` - drop db
+- `rails db:schema:load` - run schema.rb
+- `rails db:schema:dump` - dump db schema to schema.rb
+- `rails db:version` - print schema version
+- `rails db:migrate` - run migrations
+- `rails db:migrate RAILS_ENV=<env>` - run migrations in `<env>` (development, test)
+- `rails db:rollback` - [rollback previous migration](https://edgeguides.rubyonrails.org/active_record_migrations.html#rolling-back)
+- `rails db:seed` - seed by running seeds.rb
+- `rails db:setup` - db:create, db:schema:load, db:seed
+- `rails db:reset` - db:drop, db:setup
+- `rails db:migrate:reset` - db:drop, db:create, db:migrate
+- `rails generate migration <PascalName> ` - new migration `db/migrate/<snake_name>.rb`
 ```
 
 # Logging, Metrics, Alerting, Observability

@@ -17,14 +17,19 @@
   - [Dev](#dev)
   - [lhm](#lhm)
   - [spy](#spy)
+  - [cloud console](#cloud-console)
 - [Projects](#projects)
   - [Brochure2](#brochure2)
+  - [FBS](#fbs)
+  - [network-api](#network-api)
+  - [billing-cron-v2](#billing-cron-v2)
 - [Data Analysis](#data-analysis)
   - [Mode](#mode)
   - [Reportify](#reportify)
   - [Panama](#panama)
 - [Links](#links)
 - [Random Tips](#random-tips)
+- [Create Dev Store](#create-dev-store)
 
 # Terms
 
@@ -137,7 +142,10 @@
     - `mysql -u root -h $(spin show -o fqdn) -P <MYSQL_PORT>`
         - `GRANT ALL ON *.* TO 'root'@'%';` - grant remote login access
     - on Sequel Ace login with host='shopify.spin_instance.joseph-carino.us.spin.dev', username=root, port=MYSQL_PORT
-- Use constellation: `fbs` = 1 onboard, `fbs:no_onboard` = empty, `fbs:part_onboard` = 1 onboard 1 installed
+- FBS constellations:
+  - `fbs`: Shop 1 onboarded
+  - `fbs:no_onboard`: empty
+  - `fbs:part_onboard`: Shop 1 onboarded, Shop 2 installed
 
 ### Isospin
 The OS spin instances run. [Docs](https://development.shopify.io/engineering/keytech/spin/isospin/isospin)
@@ -156,16 +164,21 @@ The OS spin instances run. [Docs](https://development.shopify.io/engineering/key
 - if "error: gpg failed to sign the data" then `killall gpg-agent; gpgconf --launch gpg-agent; spin shell`
 
 ## Dev
-- `dev` - when personal access token expires for local push
+- `dev github auth` - when personal access token expires for local push
 - `dev open pr` - open a pr in browser for branch, use from spin
 - `dev annotate` - update annotations in models
 - `dev g` - update graphql schema
 - `dev deploy <stagingenvname>` - deploy to staging environment
+- `dev packages update` - update packwerk references
+- `dev typecheck` or `dev tc` - run sorbet typechecks
+- `dev rbi gems [gem...]` - generate RBIs from gems (using tapioca)
+- `dev rbi dsl [constant...]` - generate RBIs for constants (using tapioca)
 
 ## lhm
 [GIT](https://github.com/Shopify/lhm)
 - `rails generate lhm <Name>` - generate lhm
-- `VERSION=<version_num> rake lhm:run` - run lhm migration with specified version number
+- `VERSION=<timestamp> rake lhm:run` - run lhm migration
+- `VERSION=<timestamp> rake lhm:revert` - run lhm migration
 
 ## spy
 [How to Use](https://development.shopify.io/engineering/keytech/reference/spy)
@@ -177,11 +190,38 @@ Either message a channel that includes @spy or msg @spy and skip the `spy` prefi
   - `dev deploy <environment>` - deploy to environment
   - view pending deployment at `https://shipit.shopify.io/shopify/<project>/<environment>`
 
+## cloud console
+Use cloud console directly to access rails app:
+- Cloud Portal > fbs > rails-node-ssr (because crashing this pod is less risky than the job pods) > open shell (rails) > /exec rails c -- --noautocomplete --nocolorize
+
 # Projects
 
 ## Brochure2
 - [Docs](https://brochure2.docs.shopify.io/)
 - [Deployment to staging](https://brochure2.docs.shopify.io/operations/deployment#staging)
+
+## FBS
+- [how to graphql in merchant app](https://sfn.docs.shopify.io/Wiki/GraphQL#fix-for-merchant-app)
+- generate fulfillment charges: run `rake billing:test_charges:fulfillment`
+- regen graphql types: `yarn graphql`
+
+## network-api
+- [setup blog](https://blog.shopify.io/@kevin.shi/deliverr-codebase-onboarding-05a207e3) See below condensed version:
+  -  podman machine init -v $HOME:$HOME
+  -  podman machine start
+  -  npm run clean:all
+  -  npm i
+  -  npm run build
+  -  npm run dev-local
+
+## billing-cron-v2
+- [setup blog](https://blog.shopify.io/@craig.lehmann/billing-cron-v2-onboarding-d5b39f87)
+  - npm run sls-offline-dev-fresh (first time only?)
+  - npm run sls-offline-dev
+
+- full setup: `podman machine stop && echo 'y' | podman machine rm && podman machine init && podman machine start && npm run sls-offline-dev-fresh`
+- dev integration: `dev up` => `dev server`
+- testing: `npx jest <options>`
 
 # Data Analysis
 
@@ -206,3 +246,11 @@ Either message a channel that includes @spy or msg @spy and skip the `spy` prefi
 
 # Random Tips
 - after adding images, run 'bin/optimize-images'
+- if `rails c` is throwing, add `IRB.conf[:USE_AUTOCOMPLETE] = false` to `~/.irbrc`
+
+# Create Dev Store
+- so first thing is to create a new Shopify store, and go into the settings to set the shop name to whatever you want it to be - it's best to do this before installing the SFN app
+- you then need to set it as a staff store, instructions here: https://vault.shopify.io/page/Staff-Stores~2132.md#how-do-i-get-my-trial-or-paid-store-set-to-staff-or-staff-business-plan
+- After you do that, you can install SFN on it. You need to install it manually because the eligibility criteria that runs when you try to install SFN from the app store/marketing pages will disqualify your shop since it is a dev shop.
+- To do this, go to SFN Internal, and on the left side, scroll to "Install". Clicking on that link will open up a new page and you can input your shop domain there to manually install SFN.
+- After that, go back to SFN Internal, go to Shops, click in your shop and then mark it as a dev shop

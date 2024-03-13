@@ -4,7 +4,7 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
 # Ruby Cheatsheet<!-- omit in toc -->
 
 - [Basics](#basics)
-- [Vars, Contants, & Symbols](#vars-contants--symbols)
+- [Vars, Contants, \& Symbols](#vars-contants--symbols)
   - [Vars](#vars)
   - [Constants](#constants)
   - [Symbols](#symbols)
@@ -21,7 +21,7 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
   - [OpenStruct](#openstruct)
   - [Environment Variables](#environment-variables)
 - [Regular Expressions (Regex)](#regular-expressions-regex)
-- [Blocks & Procs & Lambdas](#blocks--procs--lambdas)
+- [Blocks \& Procs \& Lambdas](#blocks--procs--lambdas)
   - [Code Blocks](#code-blocks)
   - [Proc](#proc)
   - [Lambdas](#lambdas)
@@ -42,7 +42,7 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
   - [If](#if)
   - [Unless](#unless)
   - [Case](#case)
-- [Printing & Putting](#printing--putting)
+- [Printing \& Putting](#printing--putting)
 - [String Methods](#string-methods)
 - [User Input](#user-input)
 - [Loops](#loops)
@@ -54,7 +54,7 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
   - [.each](#each)
   - [.times](#times)
   - [.upto / .downto](#upto--downto)
-- [Sorting & Comparing](#sorting--comparing)
+- [Sorting \& Comparing](#sorting--comparing)
 - [Exceptions](#exceptions)
 - [Useful Methods](#useful-methods)
 - [Gems](#gems)
@@ -83,7 +83,7 @@ Looking for [Rails](../master/Ruby-on-Rails-Cheatsheet.md)?
       - [Method Stubs/Expectations](#method-stubsexpectations)
       - [Spies](#spies)
     - [Extras](#extras)
-  - [Fixtures - factory_bot](#fixtures---factory_bot)
+  - [Fixtures - factory\_bot](#fixtures---factory_bot)
     - [Create vs Build](#create-vs-build)
   - [Running Tests](#running-tests)
 - [Links](#links)
@@ -197,6 +197,8 @@ my_array[1] # b
 my_array[2..-1] # c , d , e
 multi_d = [[0,1],[0,1]]
 [1, 2, 3] << 4 # [1, 2, 3, 4] same as [1, 2, 3].push(4)
+
+%w(foo bar) == ["foo", "bar"] # => true
 ```
 
 ## Hashes (Dictionaries)

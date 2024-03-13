@@ -1,4 +1,5 @@
 [back to overview](/../..)
+Looking for [React](../master/React-Cheatsheet.md)?
 
 # JavaScript Cheatsheet<!-- omit in toc -->
 
@@ -27,11 +28,6 @@
   - [Arrow Functions](#arrow-functions)
   - [Modules](#modules)
   - [Generator Functions](#generator-functions)
-- [React](#react)
-  - [Terms](#terms)
-  - [Links](#links)
-  - [Testing](#testing)
-    - [Jest](#jest)
 - [Logging, Metrics, Alerting, Observability](#logging-metrics-alerting-observability)
 - [Tricks](#tricks)
   - [Get password combinations](#get-password-combinations)
@@ -537,23 +533,6 @@ async function() {
   console.log(friends);
 } // returns one promise that is denible
 ```
-
-# React
-
-## Terms
-- Elements - immutable descriptions of independent, reusable pieces a user interface can be built from
-- Components - encapsulate a React element tree
-
-## Links
-- [React Hooks](https://reactjs.org/docs/hooks-reference.html)
-- [React Routes](https://v5.reactrouter.com/web/api/Route)
-
-## Testing
-- npm test
-
-### Jest
-- JS Mocking Library - [see docs](https://jestjs.io/)
--
 
 # Logging, Metrics, Alerting, Observability
 - Web uses '@web-utilities/stats-client' which uses the [statsd](https://github.com/Shopify/quilt/tree/main/packages/statsd) package, which uses the Rails StatsD implementation (see Rails sheet)

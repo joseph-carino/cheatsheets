@@ -4,7 +4,7 @@ Looking for [React](../master/React-Cheatsheet.md)?
 # JavaScript Cheatsheet<!-- omit in toc -->
 
 - [Basics](#basics)
-- [Arrays & Objects:](#arrays--objects)
+- [Arrays \& Objects:](#arrays--objects)
 - [Functions:](#functions)
 - [Recursive Functions](#recursive-functions)
 - [Methods:](#methods)
@@ -31,6 +31,9 @@ Looking for [React](../master/React-Cheatsheet.md)?
 - [Logging, Metrics, Alerting, Observability](#logging-metrics-alerting-observability)
 - [Tricks](#tricks)
   - [Get password combinations](#get-password-combinations)
+- [Testing](#testing)
+  - [jest](#jest)
+    - [mocking class constructor](#mocking-class-constructor)
 
 # Basics
 - `&&`: and
@@ -570,4 +573,38 @@ var length = possibilities.length;
     let n = base[i]; i -= 1;
     setTimeout(() => { return loop(base, i) });
 })(possibilities, length);
+```
+
+# Testing
+## jest
+### mocking class constructor
+```js
+// UnderTest.ts
+import {SomeClass} from "someModule";
+
+export async function doFn(arg: number) {
+  const ins = new SomeClass();
+  return ins.doWork(arg);
+}
+
+// UnderTest.test.ts
+const mockSomeClass = mockDeep<SomeClass>();
+jest.mock("someModule", () => ({
+  ...jest.requireActual("someModule"),
+  SomeClass: jest.fn().mockImplementation(() => mockSomeClass),
+}));
+
+describe("UnderTest", () => {
+  beforeEach(() => {
+    mockSomeClass.doWork.mockResolvedValue({});
+  })
+
+  it("calls doWork with passed arg", async () => {
+    const res = await doFn(1);
+
+    expect(res).toEqual({});
+    expect(mockSomeClass.doWork).toHaveBeenCalledWith(1);
+    // expect class constructor was called with specific args?
+  });
+});
 ```

@@ -29,7 +29,10 @@
   - [Panama](#panama)
 - [Links](#links)
 - [Random Tips](#random-tips)
+  - [Flags](#flags)
 - [Create Dev Store](#create-dev-store)
+- [Data](#data)
+- [](#)
 
 # Terms
 
@@ -162,6 +165,11 @@ The OS spin instances run. [Docs](https://development.shopify.io/engineering/key
 ### GPG Signing
 [How to](https://development.shopify.io/engineering/keytech/spin/faq#How_do_I_use_GPG_signing_within_Spin_)
 - if "error: gpg failed to sign the data" then `killall gpg-agent; gpgconf --launch gpg-agent; spin shell`
+- may need also to set `export GPG_TTY=$(tty)`
+- test signing: `echo "test" | gpg --clearsign`
+- PIN entry setup:
+  - `brew install pinentry-mac`
+  - `echo 'pinentry-program /opt/homebrew/bin/pinentry-mac' >> ~/.gnupg/gpg-agent.conf`
 
 ## Dev
 - `dev github auth` - when personal access token expires for local push
@@ -248,9 +256,29 @@ Use cloud console directly to access rails app:
 - after adding images, run 'bin/optimize-images'
 - if `rails c` is throwing, add `IRB.conf[:USE_AUTOCOMPLETE] = false` to `~/.irbrc`
 
+## Flags
+- Check flag: `Verdict::Flag.enabled?(handle: "my_flag_handle", subject: @shop)`
+- Enable flag local: `bin/rails g verdict:configure_flag flag_handle --enable_ids 1`
+- Disable flag local: `bin/rails g verdict:configure_flag flag_handle --disable_ids 1`
+- ::ShopIdentity::BetaFlags::Disable.perform(
+  shop_id: Component::TrustedId.new(1),
+  name: "beta_name",
+)
+::ShopIdentity::BetaFlags::Enable.perform(
+  shop_id: Component::TrustedId.new(1),
+  name: "beta_name",
+)
+
 # Create Dev Store
 - so first thing is to create a new Shopify store, and go into the settings to set the shop name to whatever you want it to be - it's best to do this before installing the SFN app
 - you then need to set it as a staff store, instructions here: https://vault.shopify.io/page/Staff-Stores~2132.md#how-do-i-get-my-trial-or-paid-store-set-to-staff-or-staff-business-plan
 - After you do that, you can install SFN on it. You need to install it manually because the eligibility criteria that runs when you try to install SFN from the app store/marketing pages will disqualify your shop since it is a dev shop.
 - To do this, go to SFN Internal, and on the left side, scroll to "Install". Clicking on that link will open up a new page and you can input your shop domain there to manually install SFN.
 - After that, go back to SFN Internal, go to Shops, click in your shop and then mark it as a dev shop
+
+# Data
+
+`sdp-prd-interim-data-loaders.shopify.<tablename>` - extracts of shopify tables (from longboat), previously `shopify-dw`
+`sdp-ingest.monorail.monorail_<topicname>` - monorail events, previously `sdp-prd-back-office-logistics`
+
+#

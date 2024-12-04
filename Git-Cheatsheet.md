@@ -2,27 +2,23 @@
 
 # Git<!-- omit in toc -->
 
-- [Mostly used](#mostly-used)
-- [Getting Help](#getting-help)
-    - [Within git](#within-git)
-    - [outside of git](#outside-of-git)
+- [Helpful Commands](#helpful-commands)
 - [Setup](#setup)
-    - [Global](#global)
     - [Project](#project)
     - [New](#new)
     - [Existing](#existing)
-- [Staging](#staging)
-- [Commiting](#commiting)
-- [Branching](#branching)
-- [Teamwork](#teamwork)
-    - [Teamwork Workflow:](#teamwork-workflow)
 - [Removing](#removing)
-- [Ignoring](#ignoring)
-    - [Rules](#rules)
-- [Renaming](#renaming)
-- [Deploying a subfolder to GitHub Pages](#deploying-a-subfolder-to-github-pages)
-- [Stashing](#stashing)
 - [Patching](#patching)
+- [Rebase](#rebase)
+- [Push --force](#push---force)
+- [Pull (from force push)](#pull-from-force-push)
+- [Squash](#squash)
+- [Compare](#compare)
+- [Graphite](#graphite)
+    - [Common Commands](#common-commands)
+    - [Common Workflows](#common-workflows)
+        - [New work](#new-work)
+        - [Sync](#sync)
 
 
 # Helpful Commands
@@ -107,3 +103,53 @@ $ [change all pick to squash/s]
 $ git diff b1..b2           // compare changes from b1 to b2
 $ git log b1..b2            // compare commits from b1 to b2
 ```
+
+# Graphite
+[cheatsheet](https://graphite.dev/docs/cheatsheet)
+
+## Common Commands
+```javascript
+gt log short / gt ls // review stack log
+
+// Navigate
+gt co [branch] // checkout branch. interactive without branch name
+gt up [n] / gt u [n] // move up n branches
+gt down [n] / gt d [n] // move down n branches
+gt top / gt t // top-most branch
+gt bottom / gt b // bottom-most branch
+gt co -t // checkout trunk (i.e. main)
+
+gt create -[a][m] [name] // create commit and create commit. If no name specified, generate name from commit message.
+// -a adds all files
+// -m add commit message inline
+
+gt modify -[a] / gt m -[a] // amend commit
+// -a adds all files
+
+gt absorb -[a] // absorb changes into the correct commits downstream
+// -a adds all files
+
+gt submit -[u] // push branches from trunk to here, creating/updating PR for each branch.
+// -u only update existing PRs
+gt submit -s / gt ss // push descendant branches as well
+
+gt get [branch] // checkout an existing branch and restack from trunk to tip
+// if no branch provided, uses current branch
+
+gt sync // pull changes for all branches and restack all branches
+```
+
+## Common Workflows
+
+### New work
+```javascript
+gt co [branch] // interactive without branch
+
+...write some code
+
+gt create -am [name] // create commit and branch
+
+gt ss -u // create PR
+```
+
+### Sync
